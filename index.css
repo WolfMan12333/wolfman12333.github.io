@@ -108,7 +108,7 @@
 }
 
 #btn-matrix button:hover {
-  color: white;
+  color:white;
   cursor: pointer;
 }
 
@@ -138,4 +138,8 @@
 
 .inner {
   display:inline-block;
+}
+
+body {
+  background-image: url("background.jpg");
 }
