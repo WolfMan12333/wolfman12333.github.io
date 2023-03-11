@@ -108,6 +108,7 @@
 }
 
 #btn-matrix button:hover {
+  color: white;
   cursor: pointer;
 }
 
