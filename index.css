@@ -107,14 +107,7 @@
   left: 35%;
 }
 
-#btn-matrix button:after {
-  content: "Contact";
-  cursor: pointer;
-}
-
-#btn-matrix button:hover:after {
-  color:white;
-  border: green;
+#btn-matrix button:hover {
   cursor: pointer;
 }
 
