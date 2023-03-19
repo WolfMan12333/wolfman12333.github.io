@@ -84,17 +84,17 @@ body {
     -webkit-animation-name: introContent;
     -webkit-animation-timing-function: linear;
     -webkit-animation-duration: 120s; /*60s*/
-    -webkit-animation-delay: 5s; /*2s*/
+    -webkit-animation-delay: 3s; /*2s*/
     -webkit-animation-iteration-count: 1;
     -moz-animation-name: introContent;
     -moz-animation-timing-function: linear;
     -moz-animation-duration: 120s;
-    -moz-animation-delay: 5s;
+    -moz-animation-delay: 3s;
     -moz-animation-iteration-count: 1;
     -o-animation-name: introContent;
     -o-animation-timing-function: linear;
     -o-animation-duration: 120s;
-    -o-animation-delay: 5s;
+    -o-animation-delay: 3s;
     -o-animation-iteration-count: 1;
 }
 
