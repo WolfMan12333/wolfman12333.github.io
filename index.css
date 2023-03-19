@@ -2,26 +2,9 @@
 @import url('https://fonts.cdnfonts.com/css/star-wars');
 
 /* Button Colors */
-/* HOME */
-#btn-home button {
-  display:block;
-  width:100px;
-  height:100px;
-  line-height:80px;
-  border: 2px solid green;
-  border-radius: 50%;
-  color: black;
-  text-align:center;
-  text-decoration:none;
-  background: green;
-  box-shadow: 0 0 3px green;
-  font-size:20px;
-  font-weight:bold;
-}
-
 /* Add a background color on hover */
 #btn-home button:hover {
-  background-color: #3e8e41;
+  background-color: #307c32;
   cursor: pointer;
 }
 
@@ -30,13 +13,12 @@
   border:none;
   background:inherit;
   display:block;
-  color: green;
+  color: #307c32;
   text-align:center;
   text-decoration:none;
-  font-size:20px;
+  font-size:30px;
   font-weight:bold;
   position:relative;
-  left: 32%;
 }
 
 #btn-horror button:hover {
@@ -45,10 +27,10 @@
   color: yellow;
   text-align:center;
   text-decoration:none;
-  font-size:20px;
+  font-size:30px;
   font-weight:bold;
+  position:relative;
   cursor: pointer;
-  left:24%;
 }
 
 /* PROJECTS */
@@ -56,10 +38,10 @@
   border:none;
   background:inherit;
   display:block;
-  color: green;
+  color: #307c32;
   text-align:center;
   text-decoration:none;
-  font-size:20px;
+  font-size:30px;
   font-weight:bold;
   position:relative;
 }
@@ -77,10 +59,10 @@
   border:none;
   background:inherit;
   display:block;
-  color: green;
+  color: #307c32;
   text-align:center;
   text-decoration:none;
-  font-size:20px;
+  font-size:30px;
   font-weight:bold;
   position:relative;
 }
@@ -98,13 +80,12 @@
   border:none;
   background:inherit;
   display:block;
-  color: green;
+  color: #307c32;
   text-align:center;
   text-decoration:none;
-  font-size:20px;
+  font-size:30px;
   font-weight:bold;
   position:relative;
-  left: 35%;
 }
 
 #btn-matrix button:hover {
@@ -129,15 +110,10 @@
 
 .btn-circle {
   cursor: pointer; /* Pointer/hand icon */
-  float: left; /* Float the buttons side by side */
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-}
-
-.inner {
-  display:inline-block;
 }
 
 body {
