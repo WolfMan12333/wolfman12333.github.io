@@ -83,18 +83,18 @@ body {
     -o-transform: rotateX(80deg) scaleY(0.1);
     -webkit-animation-name: introContent;
     -webkit-animation-timing-function: linear;
-    -webkit-animation-duration: 130s; /*60s*/
-    -webkit-animation-delay: 7s; /*2s*/
+    -webkit-animation-duration: 120s; /*60s*/
+    -webkit-animation-delay: 5s; /*2s*/
     -webkit-animation-iteration-count: 1;
     -moz-animation-name: introContent;
     -moz-animation-timing-function: linear;
-    -moz-animation-duration: 130s;
-    -moz-animation-delay: 7s;
+    -moz-animation-duration: 120s;
+    -moz-animation-delay: 5s;
     -moz-animation-iteration-count: 1;
     -o-animation-name: introContent;
     -o-animation-timing-function: linear;
-    -o-animation-duration: 130s;
-    -o-animation-delay: 7s;
+    -o-animation-duration: 120s;
+    -o-animation-delay: 5s;
     -o-animation-iteration-count: 1;
 }
 
