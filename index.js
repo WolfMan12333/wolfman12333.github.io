@@ -5,3 +5,7 @@ function aboutmebtn() {
 function projectsbtn() {
     document.location.href = '../Projects/projects.html';
 }
+
+function contactbtn() {
+    document.location.href = '../Contact/contact.html';
+}
