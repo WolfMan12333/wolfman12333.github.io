@@ -6,6 +6,6 @@ function projectsbtn() {
     document.location.href = '../Projects/projects.html';
 }
 
-function contactbtn() {
+function conbtn() {
     document.location.href = '../Contact/contact.html';
 }
