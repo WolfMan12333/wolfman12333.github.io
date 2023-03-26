@@ -1,0 +1,260 @@
+@path: 'https://manzdev.github.io/cursos-assets/css3/';
+
+// Prepare Stargate font
+@font-face {
+  font-family: 'Stargate';
+  src: local('Stargate'),
+       url('@{path}fonts/Stargate.ttf.woff') format('woff');
+}
+
+html, body {
+  margin:0;
+  background:#000;
+  overflow:hidden;
+  //background:#040404 url('@{path}bg.png');
+}
+
+// Title header
+.title {
+  width:600px;
+  margin:0 auto 25px auto;
+  padding:0 25px;
+  font-family:'Stargate';
+  
+  img {
+    filter:invert(1);
+    width:64px;
+  }
+
+  h2 {
+    font-size:82px;
+    color:#FFF;
+    margin:25px auto 0 auto;
+    text-align:center;
+  }
+
+  h4 {
+    text-align: right;
+    margin: 0;
+    padding: 10px 75px 0 0;
+    border-top: 1px solid #ffa012;
+    
+    a {
+      color:#0ea8ef;  
+    }
+  }
+}
+
+// Out border
+.sg-border {
+  width:675px;
+  height:675px;
+  border:14px solid #111;
+  border-radius:50%;
+  margin:auto;
+  position:relative;
+}
+
+// Chevrons
+.arrow {
+  position:absolute;  
+  z-index:2;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 25px 25px 0 25px;
+  border-color: #5e2f12 transparent transparent transparent;
+  transition:all 1s linear;
+  
+  &.on {
+    border-color: orange transparent transparent transparent;
+    filter:drop-shadow(0 0 5px red);
+  }
+
+  &.arrow1 {
+    left:318px;
+  }
+
+  &.arrow2 {
+    left:525px;
+    top:80px;
+    transform:rotate(40deg);
+  }
+
+  &.arrow3 {
+    left:635px;
+    top:300px;
+    transform:rotate(87deg);
+  }
+
+  &.arrow4 {
+    left:575px;
+    top:515px;
+    transform:rotate(125deg);  
+  }
+
+  &.arrow5 {
+    left:425px;
+    top:630px;
+    transform:rotate(160deg);
+  }
+
+  &.arrow6 {
+    left:215px;
+    top:635px;
+    transform:rotate(200deg);
+  }
+
+  &.arrow7 {
+    left:50px;
+    top:515px;
+    transform:rotate(235deg);
+  }
+
+  &.arrow8 {
+    left:-12px;
+    top:315px;
+    transform:rotate(272deg);
+  }
+
+  &.arrow9 {
+    left:70px;
+    top:105px;
+    transform:rotate(310deg);
+  }
+}
+
+// Stargate inner circle
+#stargate {
+  background:radial-gradient(transparent 53%, #222 53%);
+  width:675px;
+  height:675px;
+  margin:auto;
+  border-radius:50%;
+  box-shadow:3px 3px 5px #000 inset,
+             -4px -4px 6px #000 inset;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  animation:move 20s cubic-bezier(.44,.35,.78,.73) paused infinite; 
+  
+  &.on {
+    animation-play-state:running;
+  }
+  
+  img.chevron {
+    filter:invert(1);
+    width:42px;
+    position:absolute;
+    top:46%;
+    left:47%;  
+  }
+  
+  // Primer cuadrante
+  .chevron:nth-child(1)  { transform: translate(0,     -300px) } 
+  .chevron:nth-child(2)  { transform: translate(50px,  -290px) } 
+  .chevron:nth-child(3)  { transform: translate(100px, -275px) } 
+  .chevron:nth-child(4)  { transform: translate(145px, -250px) }
+  .chevron:nth-child(5)  { transform: translate(185px, -225px) }
+  .chevron:nth-child(6)  { transform: translate(220px, -185px) }
+  .chevron:nth-child(7)  { transform: translate(250px, -140px) }
+  .chevron:nth-child(8)  { transform: translate(275px,  -90px) }
+  .chevron:nth-child(9)  { transform: translate(285px,  -40px) }
+  .chevron:nth-child(10) { transform: translate(290px,      0) }
+
+  // Segundo cuadrante
+  .chevron:nth-child(11) { transform: translate(288px,   50px) }
+  .chevron:nth-child(12) { transform: translate(275px,   95px) }
+  .chevron:nth-child(13)  { transform: translate(253px,  135px) } 
+  .chevron:nth-child(14)  { transform: translate(230px,  172px) } 
+  .chevron:nth-child(15)  { transform: translate(197px,  207px) }
+  .chevron:nth-child(16)  { transform: translate(153px,  243px) }
+  .chevron:nth-child(17)  { transform: translate(111px,  269px) }
+  .chevron:nth-child(18)  { transform: translate(70px,   286px) }
+  .chevron:nth-child(19)  { transform: translate(21px,   293px) } 
+  .chevron:nth-child(20)  { transform: translate(-25px,  295px) }
+
+  // Tercer cuadrante
+  .chevron:nth-child(21)  { transform: translate(-66px,  290px) }
+  .chevron:nth-child(22)  { transform: translate(-109px, 277px) }
+  .chevron:nth-child(23)  { transform: translate(-144px, 258px) }
+  .chevron:nth-child(24)  { transform: translate(-185px, 235px) }
+  .chevron:nth-child(25)  { transform: translate(-221px, 202px) }
+  .chevron:nth-child(26)  { transform: translate(-249px, 170px) }
+  .chevron:nth-child(27)  { transform: translate(-272px, 135px) }
+  .chevron:nth-child(28)  { transform: translate(-282px, 100px) }
+  .chevron:nth-child(29)  { transform: translate(-295px, 69px) }
+  .chevron:nth-child(30)  { transform: translate(-300px, 32px) }
+  .chevron:nth-child(31)  { transform: translate(-300px, -17px) }
+
+  // Cuarto cuadrante
+  .chevron:nth-child(32)  { transform: translate(-293px, -61px) }
+  .chevron:nth-child(33)  { transform: translate(-282px, -103px) }
+  .chevron:nth-child(34)  { transform: translate(-263px, -138px) }
+  .chevron:nth-child(35)  { transform: translate(-240px, -171px) }
+  .chevron:nth-child(36)  { transform: translate(-205px, -211px) }
+  .chevron:nth-child(37)  { transform: translate(-163px, -248px) }
+  .chevron:nth-child(38)  { transform: translate(-109px, -275px) }
+  .chevron:nth-child(39)  { transform: translate(-60px,  -287px) }   
+}
+
+// Stargate wormhole
+.wormhole {
+  position:relative;
+  background-color:transparent; //#000;
+  box-shadow:0 0 15px 10px RGBA(0,0,0, .5);
+  border:#000 1px solid;
+  width:510px;
+  height:510px;
+  border-radius:50%;
+  transition:all 1s ease;
+  
+  &.on {
+    background-color:#22A;
+    box-shadow:15px 15px 25px #11B inset,
+               -15px -15px 45px #11A inset,
+               0 0 15px 10px RGBA(0,0,0, .5);
+    //animation: moveColor 2s ease-in-out alternate infinite;
+  }
+}
+
+// Initial message
+div.message {
+  position:absolute;
+  font-size:42px;
+  color:#666;
+  top:50vh;
+  z-index:5;
+  width:100%;
+  text-align:center;
+  animation:fadeout 1s ease-out 3s 1 forwards;
+  background:RGBA(75,75,75, .25);
+  
+  & p:first-child {
+    margin-bottom:0;
+  }
+
+  & .small {
+    font-size:18px;
+    margin-top:0;
+    padding-bottom:20px;
+  }
+}
+
+// Animations
+@keyframes move {
+  0% { transform:rotate(0) }
+  100% { transform:rotate(360deg) }
+}
+
+@keyframes fadeout {
+  0% { opacity:1; z-index:4 }
+  100% { opacity:0; z-index:-1 }
+}
+
+/*
+@keyframes moveColor {
+  0% { background-color: #22A }
+  100% { background-color: #2828AA }
+}
+*/

@@ -6,6 +6,10 @@ function projectsbtn() {
     document.location.href = '../Projects/projects.html';
 }
 
-function conbtn() {
+function contactbtn() {
     document.location.href = '../Contact/contact.html';
+}
+
+function tutbtn() {
+    document.location.href = '../Tutorials/stargate/dist/index.html';
 }

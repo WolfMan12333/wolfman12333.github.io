@@ -1,0 +1,13 @@
+.title
+  h2 STARGATE
+  h4 #[a(href="https://twitter.com/Manz") BY @MANZ]
+.sg-border
+  - for (i=1; i<10; i++)
+    .arrow(class="arrow"+i)
+  #stargate
+    .wormhole
+      - for (i=1; i<40; i++)
+        img.chevron(src="https://manzdev.github.io/cursos-assets/css3/svg/chevrons/"+ ("000" + i).substr(-3,3) +".svg")      
+div.message
+  p Press chevrons for call...
+  p.small (WARNING: AUDIO LEVEL IS HIGH)
