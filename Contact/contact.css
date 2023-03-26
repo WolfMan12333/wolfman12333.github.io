@@ -9,3 +9,14 @@ body {
     height: 100%;
     width: 100%;
 }
+
+#mtext {
+    color: white;
+    height: 50px;
+    width: 490px;
+    background: black;
+    position: fixed;
+    top:50%;
+    left:40%;
+    font-size: 40px;
+}
