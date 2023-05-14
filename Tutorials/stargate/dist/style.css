@@ -253,6 +253,34 @@ body {
   background-color: #22A;
   box-shadow: 15px 15px 25px #11B inset, -15px -15px 45px #11A inset, 0 0 15px 10px rgba(0, 0, 0, 0.5);
 }
+#ch1 {
+  position: fixed;
+  text-align: center;
+  background-position-x: center;
+  top: 40%;
+  left: 45%;
+}
+#ch2 {
+  position: fixed;
+  text-align: center;
+  background-position-x: center;
+  top: 45%;
+  left: 47%;
+}
+#ch3 {
+  position: fixed;
+  text-align: center;
+  background-position-x: center;
+  top: 50%;
+  left: 45%;
+}
+#ch4 {
+  position: fixed;
+  text-align: center;
+  background-position-x: center;
+  top: 55%;
+  left: 40%;
+}
 div.message {
   position: absolute;
   font-size: 42px;

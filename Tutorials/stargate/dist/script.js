@@ -133,7 +133,17 @@ var stargate = {
     setTimeout(function() { 
       sounds.wormHole.play();
     }, 3000);
-    
+
+    //var ccs = document.getElementById("stargate");
+    //var linkText = document.createTextNode("Cryptography Tutorial");
+    //ccs.appendChild(linkText);
+    //cc.title = "Cryptography Tutorial";
+    //cc.href = "https://wolfman12333.github.io/Tutorials/stargate/video/crypt.html";
+    //document.body.appendChild(cc);
+    document.getElementById("ch1").style.visibility = "visible";
+    document.getElementById("ch2").style.visibility = "visible";
+    document.getElementById("ch3").style.visibility = "visible";
+    document.getElementById("ch4").style.visibility = "visible";
     setTimeout(function() {
       stargate.disableWormHole();
     }, 18000);
