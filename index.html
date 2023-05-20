@@ -7,26 +7,14 @@
   <script type="text/javascript" src="index.js"></script>
 </head>
 <body> 
-    <div id="btn-horror">
-      <button onclick="aboutmebtn()" value="About Me">About Me</button>
-    </div>
-  </br>
-</br> 
-</br>
-    <div id="btn-starwars">
-      <button onclick="projectsbtn()">Projects</button>
-    </div>
-  </br>
-</br>
-</br>
-    <div id="btn-stargate">
-      <button onclick="tutbtn()">Tutorials</button>
-    </div>
-  </br>
-</br>
-</br>
-    <div id="btn-matrix">
-      <button onclick="contactbtn()">Contact</button>
+  <video autoplay muted loop id="myVideo">
+    <source src="aircrack.mp4" type="video/mp4">
+  </video>
+    <div class="content">
+      <button id="btn-horror" onclick="aboutmebtn()" value="About Me">About Me</button>
+      <button id="btn-starwars" onclick="projectsbtn()">Projects</button>
+      <button id="btn-stargate" onclick="tutbtn()">Tutorials</button>
+      <button id="btn-matrix" onclick="contactbtn()">Contact</button>
     </div>
 </body>
 </html>

@@ -9,113 +9,90 @@
 }
 
 /* ABOUT ME */
-#btn-horror button {
-  border:none;
-  background:inherit;
-  display:block;
-  color: #307c32;
-  text-align:center;
-  text-decoration:none;
-  font-size:30px;
-  font-weight:bold;
-  position:relative;
+#btn-horror {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #0a4f05;
+  cursor: pointer;
 }
 
-#btn-horror button:hover {
-  font-family: 'Star Wars', sans-serif;
-  background: black;
-  color: yellow;
-  text-align:center;
-  text-decoration:none;
-  font-size:30px;
-  font-weight:bold;
-  position:relative;
-  cursor: pointer;
+#btn-horror:hover {
+  background: #000000;
+  color: #0a4f05;
+  box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
 }
 
 /* PROJECTS */
-#btn-starwars button {
-  border:none;
-  background:inherit;
-  display:block;
-  color: #307c32;
-  text-align:center;
-  text-decoration:none;
-  font-size:30px;
-  font-weight:bold;
-  position:relative;
+#btn-starwars {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #0a4f05;
+  cursor: pointer;
 }
 
-#btn-starwars button:hover {
-  background:transparent url("sword.png") no-repeat;
-  background-size: cover;
-  width:100px;
-  height:100px;
-  cursor:pointer;
+#btn-starwars:hover {
+  background: #000000;
+  color: #0a4f05;
+  box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
 }
 
 /* TUTORIALS */
-#btn-stargate button {
-  border:none;
-  background:inherit;
-  display:block;
-  color: #307c32;
-  text-align:center;
-  text-decoration:none;
-  font-size:30px;
-  font-weight:bold;
-  position:relative;
+#btn-stargate {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #0a4f05;
+  cursor: pointer;
 }
 
-#btn-stargate button:hover {
-  background:transparent url("stargate.png") no-repeat;
-  background-size: cover;
-  width:100px;
-  height:100px;
-  cursor: pointer;
+#btn-stargate:hover {
+  background: #000000;
+  color: #0a4f05;
+  box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
 }
 
 /* CONTACT */
-#btn-matrix button {
-  border:none;
-  background:inherit;
-  display:block;
-  color: #307c32;
-  text-align:center;
-  text-decoration:none;
-  font-size:30px;
-  font-weight:bold;
-  position:relative;
-}
-
-#btn-matrix button:hover {
-  color:white;
+#btn-matrix {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #0a4f05;
   cursor: pointer;
 }
 
+#btn-matrix:hover {
+  background: #000000;
+  color: #0a4f05;
+  box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+}
+
 /* ********************************************************************** */
-
-/* General work on div with buttons */
-
-.btn-circle button:not(:last-child) {
-  border-right: none; /* Prevent double borders */
-}
-
-/* Clear floats (clearfix hack) */
-.btn-circle:after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.btn-circle {
-  cursor: pointer; /* Pointer/hand icon */
+/* Style the video: 100% width and height to cover the entire window */
+#myVideo {
   position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
 }
 
-body {
-  background-image: url("background.jpg");
+/* Add some content at the bottom of the video/page */
+.content {
+  position: fixed;
+  left: 0%;
+  bottom: 0;
+  background: rgba(62, 5, 5, 0.9);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
 }
