@@ -84,7 +84,7 @@ body {
     -webkit-animation-name: introContent;
     -webkit-animation-timing-function: linear;
     -webkit-animation-duration: 150s; /*60s*/
-    -webkit-animation-delay: 7s; /*2s*/
+    -webkit-animation-delay: 3s; /*2s*/
     -webkit-animation-iteration-count: 1;
     -moz-animation-name: introContent;
     -moz-animation-timing-function: linear;
@@ -122,14 +122,14 @@ audio {
     font-size: 20px;
     -webkit-animation-name: prelude;
     -webkit-animation-timing-function: linear;
-    -webkit-animation-duration: 3s; /*7s*/
+    -webkit-animation-duration: 5s; /*7s*/
     -webkit-animation-iteration-count: 1;
     -moz-animation-name: prelude;
     -moz-animation-timing-function: linear;
-    -moz-animation-duration: 3s; /*7s*/
+    -moz-animation-duration: 5s; /*7s*/
     -moz-animation-iteration-count: 1;
     -o-animation-name: prelude;
     -o-animation-timing-function: linear;
-    -o-animation-duration: 3s; /*7s*/
+    -o-animation-duration: 5s; /*7s*/
     -o-animation-iteration-count: 1;
 }
