@@ -84,7 +84,7 @@ body {
     -webkit-animation-name: introContent;
     -webkit-animation-timing-function: linear;
     -webkit-animation-duration: 150s; /*60s*/
-    -webkit-animation-delay: 3s; /*2s*/
+    -webkit-animation-delay: s; /*2s*/
     -webkit-animation-iteration-count: 1;
     -moz-animation-name: introContent;
     -moz-animation-timing-function: linear;
