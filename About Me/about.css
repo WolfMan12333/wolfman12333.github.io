@@ -122,14 +122,14 @@ audio {
     font-size: 20px;
     -webkit-animation-name: prelude;
     -webkit-animation-timing-function: linear;
-    -webkit-animation-duration: 7s; /*7s*/
+    -webkit-animation-duration: 5s; /*7s*/
     -webkit-animation-iteration-count: 1;
     -moz-animation-name: prelude;
     -moz-animation-timing-function: linear;
-    -moz-animation-duration: 7s; /*7s*/
+    -moz-animation-duration: 5s; /*7s*/
     -moz-animation-iteration-count: 1;
     -o-animation-name: prelude;
     -o-animation-timing-function: linear;
-    -o-animation-duration: 7s; /*7s*/
+    -o-animation-duration: 5s; /*7s*/
     -o-animation-iteration-count: 1;
 }
