@@ -1,1 +1,910 @@
-WIFI HACKING
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale1">
+  <link rel="stylesheet" href="wifi.css">
+  <script type="text/javascript" src="index.js"></script>
+</head>
+<body> 
+    <div style="width:200px;" class="container">
+        <a id="divtext"><pre id="preone">
+            <h1>Creating Lab :D("I solemnly swear that I'm plotting something bad")</h1>
+<h2>Creating Lab:</h2>
+
+1.First part to breaking in to WiFi networks :D. I'll try to explain in clear way how to do it. Other thing the beginner with Computer Networks please before you read this course try to finish this(it is only for you good):
+
+comptia network+: https://www.cybrary.it/course/comptia-network-plus/
+
+comptia security+: https://www.cybrary.it/course/comptia-security-plus/
+
+comptia linux+: https://www.cybrary.it/course/comptia-linux-plus/
+
+cisco ccna: https://www.cybrary.it/course/cisco-ccna/
+
+I think, finishing that will be not bad idea but it doesn't mean end of learning.
+
+<h2>1.2.Requirement:</h2>
+
+1.2.1.Two laptops with built in WiFi card (first with Kali Linux and a second with XP, Vista, 7)
+
+1.2.2.One wireless network card:
+
+which can do packet injection and packet sniffing and which can be use with Kali Linux. The best way is to buy Alfa AWUS036H: http://www.alfa.com.tw/products_show.php?pc=34&ps=92 .Alternative: Edimax EW-7711UAN.
+
+1.2.3.One wireless access point with a possibility to encryption: WEP/WPA/WPA2.
+
+1.2.4.Connection with Internet
+
+<h2>2.Kali Linux Installation:</h2>
+
+http://docs.kali.org/category/installation behind this link you can see verry nice documentation about installation of Kali Linux system.
+
+<h2>3.Configuration of Access Point(with option wireless):</h2>
+
+3.1.Turn on access point and connect with it.
+
+3.2.Run Web Browser and in url address write address IP of your access point. (If you don't have user manual, you can find this address by writing from terminal a command: route -n). Address IP of network gate is mostly as a IP address of access point.
+
+3.3.After login check the options and settings of your access point. Find and get in the section where you can set new SSID of network.
+
+3.4.Change default value of SSID on Wireless Lab. In some models maybe require to restart a device.
+
+3.5.Go to the section where you can change settings of security networks(Wireless Security) and choose open access(Open Authentication). Mostly it's an option Disable Security.
+
+3.6.Save cahnges and if you need restart device. Now access point should work properly and give SSID Wireless Lab.
+
+<h2>4.Configuration of WiFi card:</h2>
+
+4.1.Connect your wireless card to USB port from laptop with Kali Linux System.
+
+4.2.After login to the Kali Linux OS run terminal and write there iwconfig. Answer should look more less like that:
+
+4.3.As you can see on print screen, the network interface ours wireless card is called wlan1. To activate it(if it's not active) write in terminal ifconfig wlan1 up. Next, check current state writing command: ifconfig wlan1 and click Enter button.
+
+4.4.MAC address our wireless card should be the same like MAC adress of ours wireless card Alfa(which you can find on sticker which is on the bottom of card). In that way you can be sure you turn on properly network interface.
+
+<h2>5.Connect to Access Point(configuration of WiFi card):</h2>
+
+5.1.Check currently networks found by ours wireless card with command: iwlist wlan1 scanning
+
+5.2.From reason different access point can offer wireless network with the same SSID, you should allways check MAC address in field Address is correct with MAC Adrress yours access point.
+
+5.3.In terminal: iwconfig wlan1 essid "Wireless Lab", next check status of interface by: iwconfig wlan1. If you did properly connected with access point, in field Access Point result of iwconfig command you should see MAC addr of yours access point.
+
+5.4.Check in your documentation address IP of interface of your access point. It's just default router, which you can see by: route -n. Set addr IP in the same subnetwork by: ifconfig wlan1 192.168.0.1 netmask 255.255.255.0 up. Check that command work properly by: ifconfig wlan1.
+
+5.5.Use ping to check connection with access point by: ping 192.168.0.1, also you can check that answers coming from access point using: arp -a.
+
+
+
+Verry important is what you can read here you should know perfectly, cause without knowing this what I describe here you will have verry big problem in the next lessons.
+
+WolfMan12333
+
+<h1>WLAN and related risks ("solemnly swear I am plotting something bad") part 2</h1>
+<h2>WLAN, and the associated risks</h2>
+
+Construction of frames in the WLAN:
+
+The WLAN communication is based on the transmitted frame. Sample frame:
+
+Control field of the frame (called Frame control) has a more complex structure:
+
+The type field indicates the type of frame WLAN, pointing to one of three types:
+
+1.Management Frame - are responsible for maintaining communication between access points and wireless clients. Frame managers are divided into subtypes:
+
+Authentication (authentication)
+De-authentication (authentication cancellation)
+Association Request (request association)
+Association Response (answer at the request of the association)
+Reassociation Request (request to re-associate)
+Reassociation Response (response to the request to re-associate)
+Disassociation (cancellation associations)
+Beacon (broadcast)
+Probe Request (probing)
+Probe Response (answer probing)
+2.Control Frame - are responsible for the correct data exchange between the access point and the wireless client. Control frames divided into the following subtypes:
+
+Request to Sent (RTS) (notification of the intention of data transmission) Clear to Send (CTS) (response to RTS) Acknowledgement (ACK) (confirmation of correct reception of the data frame) 3.Data Frames - transmit relevant data transmitted in the wireless network. Data frames are not subtypes.
+
+Before you can start listening frames in wireless networks, we need to create a network interface operating in monitor mode. The creation of such an interface gives you the ability to listen and capture all the frames transmitted over the wireless network (no matter whether data are for your card or not). In the case of cable networks, we say that the network interface works in a listening mode (ang.promiscous mode).
+
+Creating an interface operating in monitor mode
+
+In the console, type: iwconfig to ensure that the system correctly detects the card and loads the appropriate drivers:
+
+Activate the network interface through referrals: ifconfig wlan1 up. Make sure that the card is working properly by typing ifconfig wlan1. If it works correctly, you should see the word UP, as follows:
+
+To switch the card into monitor mode, use the command airmon-ng. Here you will know if everything works correctly because when you run the command to see interjest network wlan1 (as shown below):
+
+4.Made airmon-ng start wlan1, which creates a network interface operating in monitor mode. Created interface will have the name wlan1mon. (To check if the interface has been created correctly, type airmon-ng).
+
+Execute ifconfig wlan 1mon, on the screen you will see this:
+
+Capturing packets on a wireless network
+
+Turn on points. The access serving network Wireless Lab.
+
+Run the Wireshark packet, and in the main window, select from the menu Capture / Interfaces (capture interfaces).
+
+Select capture packets from the network interface wlan1mon by clicking the Start button on the right of the interface. Wireshark packet capture starts, the captured packets we see in the main window of Wireshark.
+To display the selected package, select it in the list in the top window and its contents will be shown in the middle window Wireshark.
+5.By display detailed information about the package, click the triangle to the left side of the frame IEEE 802.11 wireless LAN management frame.
+
+<h2>Viewing management frames, control frames and data frames</h2>
+
+To see all frame managers in the Filter type wlan.fc.type == 0 and then press Enter or click Apply.
+
+To display the control frames, type filter wlan.cf.type == 1
+
+To view the data frame type wlan.cf.type == 2
+
+To select a subtype display frames in use wlan.fc.subtype in the filter. For example, if you want out of management frames display only the frame subtype Beacon type: (wlan.fc.type == 0) && (wlan.fc.subtype == 8)
+
+Instead of manually typing filters, you can right-click any header field of the frame displayed in the center window and clicking with the right mouse button, choose Apply as Filter / Selected.
+
+Executing this will automatically create the appropriate expression and placing it in the field Filter.
+Listening and capture packets on a wireless network
+
+In the first place let's channel number, which is running the point. Wireless access Lab. To do this, start the console and type the command airodump-ng --bssid wlan1mon, where is the MAC address of our free. point. AP. After a while, you should see information about our point. AP.
+
+In our test environment access point. the access network-capable Wireless Lab is working on channel 11. To be able to listen and intercept data packets transmitted from the point. and access it, you need to set wireless adapter to work on the same channel (11). To do this, type iwconfig wlan1mon channel 11 and then iwconfig wlan1mon to make sure that the card works on the right channel.
+
+If everything is well done, we can begin to listen for packets on the interface wlan1mon. When Wireshark start capturing packets, turn on the filter transmits only packets with id BSSID, odpowiwiadający point. the access. To do this, in the Filter type wlan.bssid == as below.
+
+To view the packages, type: (wlan.bssid == ) && (wlan.fc.type_subtype == 0x20). Where is the MAC address of your point. AP. Now on laptop with sys. Windows, open web browser, type in the address field the URL of the network management interface point. AP. Ex .: http://192.168.0.1. This operation will generate and transfer relevant data packets to be captured by Wireshark.
+
+Capture package gives you the ability to easily and quickly analyze data, which are not encrypted. For this reason, data transmission in wireless networks must be protected by appropriate encryption mechanism.
+
+<h2>Injecting packages</h2>
+
+To inject packets, first run Wireshark and create a filter: (wlan.bssid == ) &&! (Wlan.fc.type_subtype == 0x08). This filter gives you the ability to view all packages in addition to the Beacon.
+
+In the terminal, type aireplay-ng -9 s "Wireless Lab" s wlan1mon
+
+Wireshark should see a whole range of captured packets. Some of them were sent (injected) by the tool aireplay-ng.
+
+(!!! FOR THOSE WHO DON'T UNDERSTAND: USING TOOLS AIREPLAY-NG DID YOU SUCCESSFULLY INJECT PACKAGES FOR WIRELESS NETWORK LABORATORY LAB. PLEASE NOTE THAT THE DATA NETWORK INJECTED SELECTED BY US PACKAGES FOR NETWORK ALTHOUGH WAS NOT CONNECTED TO THE POINT. DOSTĘPOWOEGO NA injected PACKAGES !!!).
+
+We are experimenting with a wireless network card
+
+To test the ability of the network card in the terminal, type iwconfig wlan1mon.
+
+To switch the card to the selected channel, you should execute the command iwconfig wlan1mon channel X, where X is the desired channel number.
+
+The command iwconfig does not have the option to enable channel mode hopping. To enable it, you can write a shell script, and much easier to use the command airodump-ng, which has this option. I give the ability to jump all channels through a set of selected channels or only through the channels on the selected bands. All options you will see: airodump-ng --help.
+
+Experimenting with a wireless network card (continued)
+
+The world is such a thing as regulatory authorities Wireless Networks. If you are using a WLAN, you need to comply with applicable legal requirements.. In many countries breach of such rules is a very serious offense treated (and in some even crime) and is punished to the fullest extent of the law.
+
+Turn off computer and disconnect the wireless card and then restart.
+
+After logging in to the terminal enable monitoring kernel message. Command: tail and the whole below:
+
+Now connect the network card and the screen you should see a message similar to the following figure (describe the default legal requirements and assigned to the network adapter (using the region).
+
+If you're in the US is to change the default settings of the legal requirements the network card for this country, you should enter the terminal and set reg US (for Polish and reg set PL)
+
+By the way, in the US there is the possibility of using channel 12 (not allowed).
+
+The situation is similar in the case of a change of transmit power of the card. In the US, the maximum transmit power of the wireless network adapter is limited d o27 dBm (500 mW), so even if your wireless can transmit with a power of 1 W (30 dBm), it is, for legal reasons, you can not configure it to operate at full power.
+
+We've learned patterns of frames, listen for packets and packets injection and change settings network adapter and monitor kernel message (very useful).
+
+WolfMan12333
+
+<h1>Bypassing WLAN Authentication ("I solemnly swear that I'm plotting something bad") Part 3</h1>
+<h2>Revealing the hidden SSID network</h2>
+
+If using Wireshark will monitor frame broadcast network Wireless Lab, you will see that the SSID is transmitted in the form of an open text. Broadcast frames (frames Beacon) should look like the figure below:
+
+
+Now change the configuration point. Wireless Lab network access in order to turn off the broadcast SSID. Depending on the model used point. Access option names may be different. In the case of our router, we need to Wireless Settings tab, deselect Enable SSID Broadcast, as shown in the following figure.
+
+
+If you now look at the frames intercepted by Wireshark is certainly notice that the SSID Wireless Lab disappeared from broadcast frames - and that's the point in hiding the SSID.
+
+
+To bypass such "protection", first we use the passive technique consists in waiting until some eligible clients connect to the point. AP. Such an event will generate packets Probe Request (probing) and Probe Response (answer probing), which contain the SSID of the network and thus reveal its presence.
+
+
+An alternative solution may be to use the command aireplay-ng to send on behalf of the points. Access to all stations packages Deauthentication (cancel authentication). To do this, you should open a terminal window and enter the command aireplay-ng -0 5 -a wlan1mon, where is the MAC address of our router. -0 Option to select the attack that cancellation of authentication (ang. Deauthentication attack), and 5 is the number of packets to be sent. The last option, -a, allows you to specify the MAC address points. Access, which is our goal.
+
+
+Sending packages Deauthentication forces on all eligible client disconnects and reconnects to the point. AP. To make it easier to observe what is happening, you can program Wireshark create a filter that will let in only packages Deauthentication.
+
+
+Packages Probe Response (answer probing), transmitted by point. Access to podłączających the customers reveal the SSID of the network. An example of the this session, we can see in the program Wireshark, as shown in the figure below. When the authorized client reconnects to the point. access, we can see the SSID transmitted in frames Probe Request (probing) and Probe Response (answer probing). To see all frames sent to and from the point. AP (with the exception of broadcast frames), you can use a filter (wlan.bssid == ) &&! (wlan.fc.type_subtype == 0x08). The operator && is a AND! negation.
+
+
+<h2>Bypassing MAC address filtering</h2>
+
+First, we need to change the configuration of the access point in order to enable MAC address filtering. Then, to the list of authorized MAC addresses you have to add the MAC address of the laptop, which will be the object of attack. In the case of our example router, the whole process is as follows:
+
+
+If you enable MAC address filtering to the point. Access will be able to connect only those clients whose addresses are on the list of authorized MAC addresses. If you attempt to connect take client whose MAC address is not on the list of qualified, such operation finished in failure.
+
+If the client's MAC address is not on the list of authorized clause. Access sends information to the client about the lack of authentication, which looks more or less as shown in the figure below
+
+To bypass filtering MAC addresses, we use first command airodump-ng to deceive the MAC addresses of customers already connected to a point. AP. To do this, you should open a terminal and enter the airodump-ng -c 11 -a --bssid wlan1mon. By using options bssid you will be able to monitor only the selected point. access, which we are interested. Option -c 11 switches the wireless network adapter on channel 11, or channel, which is running the point. access. The -a option makes the results of the command airodump-ng will only display information about clients that are assigned to the selected point. Access and connected thereto. As a result of execution of such orders you will get a list of MAC addresses of clients associated with the point. AP.
+
+
+When you find the MAC address of the authorized client can under him "spoof" using command macchanger to forge our MAC address (utility macchanger is part of the distribution system Kali Linux). To do this you should from the terminal window execute macchanger -m wlan1mon. From that moment the MAC address that you specified as an argument to the -m option, will be the new "fake" at the interface wlan1mon.
+How you can see, from this moment, using fake MAC address legitimate customer, you can easily connect to a point. AP.
+Connecting to the point. Access open access
+
+First, you need to configure point. Wireless Lab network access in order to work in the authentication mode with open access. In our case the whole operation boils down to include in the Wireless Security (wireless security) option Disable Security (Off collateral).
+
+
+Now connect the points. Access by running iwconfig wlan1mon essid "Wireless Lab".
+Bypassing the shared key authentication
+
+First, we need to configure point. Wireless Lab network access in order to work in the authentication mode with shared key. In our case the whole operation boils down to the selection in the Wireless Security WEP and authentication using a shared key Shared Key.
+
+Now connect the authorized client to the point. Access using a shared key you selected in step 1.
+
+To bypass the authentication of the shared key, you need to start listening and capturing packets transmitted between points. Access and its customers. In addition, you should also keep a file on disk dump all the packages involved in the authentication process. To this end, the terminal window execute airodump-ng -c wlan1mon 11 --bssid -w keystream. The -w option causes the command airodump-ng stores the captured packets to a file called keystream. Good to know that a good solution would be to store individual session packet capture in separate files, so you can calmly analyze individual sessions for a long time after their completion.
+
+When you are ready you can patiently wait for eligible clients connect to the point. access, or force disconnect and reconnect customers using the technique of selective or global cancel authentication, described in a previous subsection. When authorized clients connect to the point. access and process the authentication is successful, the command airodump-ng will capture the entire session packets and store it in a file on disk. The proof that the capture session is successful, it will be the appearance of the column AUTH of SKA (ang. Shared Key Authentication).
+
+The captured stream key (ang. Keystream) is stored on the disk in the current working directory in a file called preceded by the word keystream. In our case, the stream key has been saved in a file called keystream-01-00-21-91-D2-8E-25.xor.
+
+6.For now use the stream obtained the key to the "falsification" authentication, you should use the command aireplay-ng. To do this, in a terminal type: aireplay-ng -1 0 -e "Wireless Lab" -y keystream-01-00-21-91-D2-8E-25.xor -a -h aa: aa: aa: aa: aa: aa wlan1mon. Command aireplay-ng download stream key, which have obtained in point. 5, and attempts to authenticate the connection point. access with MAC address 00: 21: 91: D2: 8E 25 (that is, our network Wireless Lab). As the MAC address of the client command aireplay-ng will use an arbitrary address aa: aa: aa: aa: aa: aa. To see the program start Wireshark packet capture and use the filter wlan.addr == aa: aa: aa: aa: aa: aa.
+
+The first package is the authentication request sent by the command aireplay-ng to the point. AP.
+
+The second package contains the text of the call that point. Access refers to the client.
+
+The third package command aireplay-ng sends an encrypted response to the point. AP.
+
+Due to the fact that the command aireplay-ng used the stream key acquired earlier from passive listening, the authentication process is successful and the fourth package point. Access sends the message to the client about the successful completion of the process.
+
+After receiving confirmation that the authentication process was successful, the command aireplay-ng sends to the point. Access faked request association (ang. Association Request), which also is successful.
+
+If you now check the contents of the log in your point. access, it should be there information that the client MAC address AA: AA: AA: AA: AA: AA is connected.
+
+Summarizing. We learned a lot about acting authentication in wireless networks. We learned here that hiding the SSID network is a typical example of the use of methods of protection by secrecy (ang. Security by obscurity), which in practice is easy to break and does not provide network virtually any security. Is not it also provides MAC address filtering, because wireless networks MAC addresses authorized clients can be easily intercepted by passively listening for traffic. This is because the MAC addresses of the received packets are not encrypted. Authentication open access does not actually provide any authentication. Authentication of the shared key is much more difficult to bypass, but using the right tools, it is possible to acquire the captured packet stream key and use it to generate the response to subsequent requests sent by point. access. With this solution, you can pass the authentication process and connect to the point. access without the knowledge of the shared key.
+
+WolfMan12333
+
+<h1>Weaknesses encryption protocols in WLAN("I solemnly swear that I'm plotting something bad") Part 4</h1>
+<h2>Breaking the security of WEP</h2>
+
+As before, here also do not provide you any images, because they do not have the router WEP encryption options.
+
+First, we need to using a Web browser to connect to the management interface point. network access Wireless Lab and go to the settings section, where you can choose the encryption method calls wireless networks.
+
+In the case of sample points. Access can be done by setting the Wireless Security WEP. In addition, we also need to choose the length of the WEP key. Select WEP key length of 128 bytes. Option Key Type is set to 128bit, and as WEP, let's use the following string of hexadecimal values: abcdefabcdefabcdefabcdef12. (Of course, in their laboratories you can use other settings).
+
+After completing the configuration point. Access should provide network Wireless Lab secure WEP. Now you can proceed to configure the appropriate computer through which you perform the attack.
+
+In the terminal window, turn on the network interface wlan1. (ifconfig wlan1 up).
+
+Then follow: (airmon-ng start wlan1)
+
+The commands will create the interface wlan1mon operating in monitor mode. To check if the interface wlan1mon was created correctly, you should use the command iwconfig.
+
+To locate a point. Access, which will be the object of attack, we use now command airodump-ng. At the terminal prompt, type: airodump-ng wlan1mon
+
+If everything works correctly, the results of this command should disclose the presence of point. network access Wireless Lab, working with WEP.
+
+Here we are only interested network Wireless Lab, so you should execute the command shown below, so that will be displayed only packets from the network.
+
+airodump-ng --bssid 00:21:91:D2:8E:25 --channel 11 --write WEPCrackingDemo wlan1mon
+
+Use the directive --write causes the command airodump-ng will be would write captured packets in pcap file named WEPCrackingDemo.
+
+Now we know we can use WEP key abcdefabcdefabcdefabcdef12 and connect the wireless client to the point. AP. If the connection is successful, you should see it on the screen in the results of the command airodump-ng.
+
+If you take the ls command, the current working directory you should see files with names beginning with the prefix * WEPCrackingDemo-. These are files created by the command airodump containing the captured packets from the wireless network Wireless Lab.
+
+You probably do not have too many captured packets (you can see it in the column #date, for me was 75 packets). To use the weaknesses of WEP and carry out a successful attack would require a much larger number of captured packets encrypted using the same key. Because of this need to somehow force the network to produce more data packets. To do this, use the command aireplay-ng.
+
+By using the command aireplay-ng you can capture ARP packets and then inject them back into the network, simulating response to ARP requests. Command aireplay-ng should run in a separate terminal window. Repeated sending these packages several thousand times, you generate network quite busy. Although the command aireplay-ng does not know the WEP key used on the network under attack, it is still able to identify the ARP packets based on checking the size of transmitted packets. ARP protocol is a fixed-length header, so the size of ARP packets sent over the network can be easily fixed and used for their search among the other packages, even when transmitted packets are encrypted.
+
+To perform this operation, use the command aireplay-ng with the following options -3 repeats ARP, -b allows you to specify the identifier BSSID, -h and allows you to define the MAC address of the client, in which he impersonates. You need to do so, because an attack involving the repetition packet is effective only when packets are sent by a customer who has successfully "certified" and assigned to the point. AP.
+
+aireplay-ng -3 -b E8:94:F6:62:1E:8E -h 20:10:7A:45:36:61
+
+Almost immediately after running the above command will start to capture the first ARP packets and injecting them back into the network. If after you run this command on your screen will appear errors, try to re-run the command aireplay-ng, but this time adding the command line option --ignore-negative-one.
+
+Now when you run the above command starts capturing a large number of data packets. All captured packets are saved to disk files WEPCrackingDemo- *, which has already seen a moment ago.
+
+Now you can finally proceed to due process "breaking" security protocol WEP. To do this, open a new terminal window and run aircrack-ng, giving as argument the name of the file WEPCrackingDemo-01.cap. The command aircrack-ng will start analyzing and try to crack the WEP key on the basis of the data packets stored in the file. Please note that a good solution is to run concurrently with the command airodump-ng capture and recording WEP packets, commands aireplay-ng carried out the attack by repeating captured so far package. In this experiment, each of these commands has been run as a terminal window.
+
+The number of data packets necessary to carry out a successful attack on the WEP key can not be determined in a simple and reproducible way, but experience shows that this should be roughly a hundred thousand or more packages. In the case of high-speed networks with high traffic (or in the case of using the command aireplay-ng) the time needed to collect the number of packets is from 5 to 10 minutes.
+
+If the number of data packets stored at a given moment in the file is insufficient command aircrack-ng will suspend work until gather more packets. After capturing an adequate number of new packages, the command will automatically resume operation.
+
+After capturing and saving the appropriate number of packages command aircrack-ng will usually be able without difficulty to crack the WEP key. When this happens, the screen will be a message containing an outdoor key command and exits.
+
+It is worth noting that WEP is totally vulnerable to such an attack, and any WEP key (no matter how complex) will sooner or later be broken by the command aircrack-ng. The only element needed to carry out such an attack is to collect the appropriate number of packets encrypted using this key, save them in a file and specify the file as an argument to call the command aircrack-ng.
+
+Breaking weak passwords in networks with WPA-PSK
+
+First, using a Web browser, connect to a terminal configuration point. Wireless access network laboratory Lab and set point. access so that the use of WPA-PSK. As a password, use WPA-PSK string abcdefgh, so it will be vulnerable to a dictionary attack
+
+In the terminal window follow the below command to start capturing and saving to disk packets on the network Wireless Lab.
+airodump-ng --bssid 00: 21: 91: D2: 8E 25 --channel 11 --write WPACrackingDemo wlan1mon
+
+Now we have to wait until some eligible clients connect to the point. access, so you'll be able to intercept packets four-step authentication negotiation. Instead, we can inject into the network package cancel authentication, which will force disconnection and re-connection of the customers. Not to wait for new customer network and accelerate the attack, take advantage of this second solution. Just as in the previous exercise, if you encounter problems you should try to restart the command by adding the command line option --ignore-negative-one. It is worth noting that in such a situation it may be necessary to carry out at least a few attempts to run this command.
+
+After capturing a four-course of negotiations authentication command airodump-ng will inform you of this by displaying in the upper right corner of the screen message WPA handshake, then BSSID point. AP. If you used the option --ignore-negative-one, this message may be replaced by another. In this case you should simply observe carefully the results of the command to observe the moment of capture the entire authentication process.
+
+Now you can stop command airodump-ng. Then run the Wireshark program, load the file pcap containing the captured packets and look at the conduct of a four-negotiation authentication. Packets in Wireshark window should look something like the figure reproduced below. The first package of negotiations has been selected. Packages involved in negotiations Authentication Protocol column have a value EAPOL a column Prediction - Key value.
+
+At this point, you can begin the actual process of breaking the key. To do this, you'll need a dictionary containing a list of the most commonly used passwords. In the system of Kali Linux you will find a lot of files with password dictionaries, which are located in metasploit (I personally use rockyou.txt), as shown in the figure below. It is noteworthy that the chances of success of the attack on the network with WPA depend largely on how good dictionary passwords have. As already mentioned, Kali Linux has quite a lot of ready to use vocabularies, although in many cases they will be insufficient. Keywords chosen by administrators wireless network depends on many different factors, such as part of the password can be your favorite topics administrator, the name of the country in which it operates a network name commonly found in the region, etc. In addition, a large impact on the strength of a password is also true, that knowledge of issues related to network security are administrators and network users. Before conducting security audit, which includes penetration testing wireless networks, you should prepare yourself before extensive dictionaries, taking into account local specifics of the network.
+
+Run aircrack-ng and the arguments of the call, enter the name of the pcap file containing the captured packets and the path to the dictionary file. In our case we used a file nmap.lst, such as shown below.
+
+Commands aircrack-ng will use the dictionary file to check the following passwords and break the encryption key. If the password used in the network is located in the dictionary file, after some time will be traced and command aircrack-ng will notify you by displaying on the screen the relevant information, as shown below.
+
+It is worth noting that as we conduct a dictionary attack, the condition for its success is that the correct password must be in the dictionary, which you pass as an argument command aircrack-ng. If the password is not in the dictionary, the attack will fail!
+Speeding up the process of breaking keys
+
+If you want to pre-calculate the PMK keys for the dictionary and the SSID, you can use the genpmk. To do this, in a terminal window, type the command:
+genpmk -f <name_of_dict_file> -d PMK-Wireless-Lab -s "Wireless Lab"
+
+As a result, the command will create a file called PMK-Wireless-Lab, which contains the calculated values of key PMK.
+
+Now configure the point. so access to the wireless network used the WPA-PSK password abcdefgh (present in our dictionary), and then you catch the exchange of packets, which will take place during the four-step authentication negotiation authorized client. When capturing is finished, we will use the package Cowpatty to crack WPA password (see figure below).
+
+Breaking our passwords using Cowpatty package and the previously calculated value arrays key PMK took just over 7 seconds.
+
+For comparison, use now command aircrack-ng with the same file dictionary, but without calculating the value of the key PMK. In our case together the whole operation took more than 22 minutes, which perfectly illustrates the complexity of the calculation and the profit that gives advance the key values ​​PMK.
+
+If you would like to use previously computed key values ​​PMK to crack passwords using command aircrack-ng, you will need to use a tool called airolib-ng PMK-Aircrack --import cowpatty PMK-Wireless-Lab, where the PMK-Aircrack is the name of the database PMK keys in a format accepted by the command aircrack-ng, which will be created on the basis of data from the database cowpatty PMK-Wireless-Lab, currently stored in the format genpmk.
+
+When the conversion is complete keyring PMK you can use it while cracking passwords using command aircrack-ng, which of course significantly speed up the whole process. To find out, run the command: aircrack-ng r PMK-Aircrack WPACrackingDemo2-01.cap
+
+There are also other tools Kali Linux, for example Pyrit that will allow you to use password-cracking systems with multiple processors. To use this command, you should use the -r option of giving the aisle pcap file containing the captured packets, and the -i option to define the key database stored in the PCM format genpmk. In the same system we used earlier to work with other tools, breaking the key using packets Pyrit took about three seconds (of course using the same base key PMK, which was created earlier command genpmk).
+
+Decryption packages WEP and WPA
+
+The process of decryption will now be subjected to packets stored in the file WEPCrackingDemo-01.cap you used during the process of breaking the WEP key. In this exercise we will use another tool package Aircrack-ng, which is called airdecap-ng. To do this, in a terminal window, execute the following respective (using the WEP key, which broke in one of the previous exercises)
+airdecap-ng -w abcdefabcdefabcdefabcdef12 WEPCrackingDemo-02.cap
+
+Decoded packets are stored in a file called WEPCrackingDemo-02-dec.cap. To view the first ten packets of this file, use a tool called tshark. Remember that in your case the contents of captured packets may be very different.
+
+
+decrypt packets WPA / WPA2 PSK with breach of keys and commands airdecap-ng takes place in exactly the same way. To find out, go to the terminal window and issue the command shown below:
+airdecap-ng p abcdefgh WPACrackingDemo-02.cap s "Wireless Lab"
+
+
+
+<h2>Connecting to a network using WEP</h2>
+
+After breaking the WEP key can be connected to such a network, by using the command iwconfig. To do this, use WEP, who have obtained in a previous exercise - abcdefabcdefabcdefabcdef12
+Connecting to the network using WPA
+
+In the event of a network using WPA encryption process of connecting up is a bit more complex. The command iwconfig can not be used for connecting to private and corporate WPA / WPA2, because it simply does not support such calls. For this reason, in this exercise, you use the new tool, called wpa_supplicant. To use it to connect to a wireless network, you must first create the appropriate configuration file, as shown in the figure below. File name the wpa-supp.conf.
+
+After you create a configuration file, you can connect to WPA. To do this, go to the terminal window and run the command wpa_supplicant -D wext -i wlan0 -c wpa-supp.conf. When you get the correct combination, the command wpa_supplicant will inform you about the on-screen message appears: Connection to XXXX completed.
+
+When the connection for the network WEP and WPA both, you should use the command dhcpclient3 to obtain an appropriate IP address from a DHCP server. To achieve this, you should be in a terminal window execute dhcpclient3 wlan0.
+
+Summary
+
+Here we learned to break WEP encryption and WPA / WPA2 PSK. And that WPA / WPA2 can not break existing cryptographic methods, albeit in a situation where the network WPA / WPA2 PSK uses a weak, poorly chosen password, it is possible to crack after the attack predictive.
+
+WolfMan12333
+
+<h1>Attacks on infrastructure WLAN("I solemnly swear that I'm plotting something bad") Part 5</h1>
+<h2>Breaking the factory default passwords points. access</h2>
+
+Launch a web browser and connect to the management interface network access point Wireless Lab.
+
+
+The manufacturer's website points. You can access to find out that the default login credentials for the admin is admin / password. Thanks installed and activated your new router you can immediately log in to him on admin rights. It perfectly shows how easy it is to "break" to the point. access, the administrator has not changed the default factory password. In preparing to conduct penetration testing should always be downloaded from the manufacturer's user manual of the model point. AP. Thanks to see with what device you are dealing with and you may be able to find its potential weaknesses, which later will use during testing.
+
+
+<h2>DoS attacks</h2>
+
+WLAN are very susceptible to DoS attacks, carrying out using the following techniques:
+
+Attacks cancellation of authentication (ang. Deauthentication attacks)
+Attacks cancellation associations (ang. Disassociation attacks)
+Attacks CTS-RTS (. Clear-to-Send / Ready-to-Send)
+Disrupting or jamming the wireless signal.
+DoS attack type cancellation authentication
+Using a Web browser, connect to the management interface of your point. access and configure it so that the network used the authentication open access, without encryption. This way you can easily observe the contents of transmitted packets using Wireshark.
+
+
+Now connect the authorized client to the point. AP. In the terminal window in which it operates command airodump-ng, you can see that the connection is active.
+
+
+Go to the computer that you use to carry out attacks, and using command aireplay-ng perform selective attack type cancel authentication.
+
+
+Please note that the selected client completely disconnects from the point. AP. If necessary, you can easily be verified in the terminal window in which it operates command airodump-ng.
+
+
+When browsing web traffic you're using Wireshark, you should notice a large number of packages such cancellation authentication (eng. Deauthentication), which had just sent what was shown in the first figure below.
+
+
+If necessary, you can make a similar attack on all clients of the network. To do this, you should, impersonating point. Access, send a broadcast packet cancel authentication (ang. Deauthentication broadcast packet), which in turn will cause the disconnection of all customers.
+
+
+<h2>Malicious twin and spoofing MAC</h2>
+
+Use the airodump-ng to find identifiers BSSID and ESSID point. Access, which will emulate our mischievous twin.
+
+
+Connect the authorized client to the point. AP.
+
+
+Using the information obtained, now create a new point. Access, which will have the same ESSID, but another BSSID and other MAC address. To do this, use the airbase-ng, as shown below.
+
+
+New item. Access will also appear in the terminal window in which it will operate the command airodump-ng. To start, open a new terminal window and type the following command:
+airodump-ng --channel 11 wlan1mon
+
+
+
+Now, send the customer a package of canceling authentication, so you disconnect it from the point. Access and immediately attempts to connect again.
+
+
+If the new point. Access (malignant twin) is located closer to the customer than the original signal our new point. will be stronger and the client connects to the malicious twin.
+
+If necessary, you can also fake BSSID and the MAC address of the original point. Access, which make that mischievous twin will be even more difficult to detect. To do this, you should execute the command shown below:
+
+airbase-ng <router_mac> --essid "Wireless Lab" -c 11 wlan1mon
+
+If you now look at the results of the command airodump-ng, you'll find that our twin malicious virtually impossible to detect.
+
+
+Even using the command airodump-ng, you are not able to see that on the same channel are two different physical point. Access. As you can see, this configuration is the most effective and the most dangerous form of malicious twin.
+Unauthorized point. access
+
+First, by using the command airbase-ng run unauthorized points. access and give it ESSID Rogue.
+
+
+Now you should create a network bridge between Ethernet interface (as part of the authorized network) and our unauthorized points. AP. To do this, we must first install the utility bridge-utils, and then create a network interface acting as a bridge, to which we give the name of the WiFi-Bridge. To do this follow:
+apt-get install bridge-utils
+
+brctl addbr Wifi-Bridge
+
+
+
+Then add the bridge to both Ethernet interface that virtual interface created by at0 command airbase-ng. To do this follow:
+brctl addif Wifi-Bridge eth0
+
+brctl addif Wifi-Bridge at0
+
+
+
+In the next step we need to activate both interfaces, result in an activation of our bridge network. To do this follow:
+ifconfig eth0 0.0.0.0 up
+
+ifconfig at0 0.0.0.0 up
+
+
+
+Now there remains only enable IP forwarding (and. IP forwarding) in the kernel to make sure that the packages are sent as you wish. Follow:
+echo 1 >/proc/sys/net/ipv4/ip_forward
+
+
+
+From now on, each wireless client that will connect to our unauthorized points. Access will have full access to the authorized network through the Network Bridge Wifi-Bridge, connecting a network cable from unauthorized wireless connection. To verify this, connect the client to an unauthorized item. Rogue access. In Win 7 system, such a connection may look like on below.
+
+
+Note that the client now receives an IP address from the DHCP server on the LAN authorized.
+
+
+From the moment you from unauthorized wireless client access to any host within the authorized network cable. In the example below, we use the ping command to check the connection the default gateway network.
+
+
+Summarizing
+
+We've covered:
+
+Using the default access accounts and passwords in point. access.
+Denial of service attack (DoS)
+Substituted point. Access masquerading as legitimate devices (attacks evil twins) and spoofing MAC addresses point. access.
+Unauthorized point. access corporate networks. 
+WolfMan12333
+
+<h1>Attacks on the WLAN client ("I solemnly swear that I'm plotting something bad") Part 6</h1>
+<h2>Carrying out attacks Misassociation</h2>
+
+In previous exercises used the client who connect to the network access point Wireless Lab. In this exercise, turn on the client, without enabling network access point Wireless Lab. After starting the client, open a terminal window, run airodump-ng wlan1mon and check the results of his actions. Very soon you'll find that the client is not associated with any access point (ang. Not associated mode) and polls the network for available network access point Wireless Lab and other networks whose IDs are stored in the saved profile.
+
+
+To better understand what is happening here, start Wireshark and start listening for packets on the interface wlan1mon. As you might expect, perhaps you'll see a whole bunch of various packages that have no connection with our analysis. To see only what interests you, you should be in the program Wireshark create a filter that shows only packets probing (ang. Probe Requests packets) coming from the client MAC address you are currently using.
+
+
+In our case, that the filter will be as follows: wlan.fc.type_subtype == 0x04 && wlan.sa ==. When activated in the Wireshark should appear only packets with the SSID previously used network.
+
+Now try to run a fake point. network access Wireless Lab. To do this, on the computer used for penetration testing, open a terminal window and issue the command shown below:
+
+airbase-ng -c 3 -e "Wireless lab" wlan1mon
+
+
+
+In the next few minutes looking for the network client automatically connects to our substituted points. AP. This experience shows how easily you can capture such unmatched customer.
+
+
+The second scenario that you try this exercise is to create a false point. Wireless Lab access network in the presence of an authorized real point. AP. To do this, turn on the access point and make sure that the network Wireless Lab is available for clients). For this experiment we set point. Access to work on channel 3. Let now the client to connect to a point. AP. To check if the connection attempt was successful, you can use the command airodump-ng, as illustrated in the following figure.
+
+
+Now turn on the false point. network access Wireless Lab.
+
+
+Please note that our client is still connected to the real point. network access Wireless Lab.
+
+
+To carry out the attack, now impersonate the real point. Access and send a message to the client to cancel the authentication, which will force the client disconnected.
+
+
+If the signal by our point. Access is stronger than the original point. Access client when you try to restore the connection will automatically connect to a false point. AP.
+
+
+To verify the connection, you can run airodump-ng, and the results of its activities see the affected client is now associated with our false point. AP.
+
+
+<h2>Denial of Caffe Latte</h2>
+
+First, you need to configure point. network access Wireless Lab to use a WEP key ABCDEFABCDEFABCDEF12 (hex).
+
+Then connect our customers to the network and using command airodump-ng, make sure that the connection attempt was successful.
+
+Now disconnect point. Access and make sure that the client is not associated with any points. access and polls the network for available network Wireless Lab (using WEP).
+
+command airbase-ng activate the fake point. Access to the network SSID Wireless Lab, using the arguments of the call.
+
+airbase-ng -c 3 -a -e "Wireless Lab" -L -W 1 wlan1mon
+
+Immediately after connecting the customer to the point. Access command airbase-ng launches an attack type of Caffe Latte.
+
+Now execute airodump-ng and start collecting packages from a false point. access, just like you did before, in the exercise discussing methods of breaking the WEP key.
+
+airodump-ng wlan1mon --bssid -w keystream
+
+Run the command aircrack-ng, just as you did before to begin the process of breaking the WEP key. To do this, in a terminal window, type the command aircrack-ng filename, where filename is the name of the file created command airodump-ng.
+Cancellation of client authentication
+
+Before you begin an exercise, you need to turn on the point. network access Wireless Lab, which after the previous exercise should be configured to use WEP. Leave such a configuration, in order to prove that the attack on the connection between the client and the point. access is possible even in situations where such connection is encrypted. After turning point. access, open a terminal window and using the command airodump-ng check that point. Access is working properly.
+
+Now connect the client to the point. Access and check the connection by using the command airodump-ng.
+
+Run aireplay-ng, through which you perform an attack on the connection between the client and point. AP.
+
+The customer is disconnected from the point. access and attempts to re-establish a connection, which can be verified using Wireshark, as you did previously.
+
+wlan.addr ==
+
+As you can see, even if WEP encryption is possible to carry out an attack involving the cancellation of client authentication, and disconnection from the point. AP. Interestingly, in exactly the same way you can carry out the attack on the network uses WPA / WPA2. To be convinced of this now, change the configuration of points. access in order to use WPA encryption, and see if you can run a successful attack.
+
+
+Connect the client to the point. Access and make sure that the connection is working properly.
+
+
+Then, run the command aireplay-ng, whereby again you perform an attack on the connection between the client and point. AP.
+
+
+<h2>Breaking WEP key by attack type Hirte</h2>
+
+Using the command airbase-ng, create a point. Access using WEP, exactly as it did when discussing Denial of Caffe Latte. The only change is that instead of the -L option, use N, which triggers an attack type Hirte.
+
+
+Open a separate terminal window and run it with the command airodump-ng, whose task will be to capture packets Wireless Network Lab point. Access (Honeypot).
+
+
+The command airodump-ng will start to monitor network traffic and saving captured packets to a file Hirte-01.cap.
+
+
+When a client connects to a substituted item. the access command airbase-ng automatically start carrying out the attack type Hirte.
+
+
+Now, run aircrack-ng, as an attack-type Caffe Latte, which after capturing and processing the appropriate number of packages to break WEP encryption key.
+Breaking WPA without the presence of point. access
+
+First, create a substituted item. Access (Honeypot) Wireless Network Lab, using WPA PSK. -z 2 creates a point. Access WPA PSK uses the TKIP protocol.
+
+
+Then, start new terminal window command airodump-ng, whose task will be to capture packets on the network.
+airodump-ng -c 3 --bssid <mac_addr> --write AP-now wlan1mon
+
+
+
+Now, when a customer seeking connection to connect to the point. Access will begin the process of negotiating a four-authentication, which, however, is interrupted after sending the second message of the negotiations, as we described earlier - but at this stage we already capture all packets necessary to carry out the attack.
+
+Now, run aircrack-ng using to attack the same dictionary file as before. After a time the password is cracked PSK (if used were in the dictionary).
+
+Summary
+
+In this lesson you learned that the wireless clients are very susceptible to attacks such as the Honeypot and Misassociation (forcing substituted associations) attacks Caffe Latte (allowing for the acquisition of key network directly from the client), attacks cancellation of authorization and cancellation of associations (Denial of Service , DoS) attacks Hirte (alternative way of obtaining a WEP key directly from a customer seeking connection), and finally allowing the attacks to crack passwords WPA PSK without the presence of an access point.
+
+WolfMan12333
+
+<h1>WPS encryption and probing networks ("I solemnly swear that I'm plotting something bad") Part 7</h1>
+WPS has many gaps, including gap discovered in 2011 that allows to carry out effective brute-force attacks on wireless networks using this authentication. It is possible falsification of network traffic necessary to negotiate authentication and PIN code used in the algorithm WPS consists of only eight digits from 0 to 9, which gives only 100 000 000 possible combinations. For comparison, an eight-character password using capital and lowercase letters and numbers only gives 218 340 105 584 896 possible combinations. In addition, the algorithm came WPS also has weaknesses such as:
+
+In eight character PIN algorithm WPS last character is a checksum of the first seven digits, which means that it is easy to calculate and thus reduces the number of possible PIN codes to a maximum of 10 000 000 combinations.
+In addition, the first four and the next three digits of the PIN are verified separately, which results in a further reduction in the number of possible PIN codes 104 + 103 combination, in other words, up to 11 000 combinations.
+With such solutions, introduced the mechanism of authentication number of possible PIN has been effectively reduced from 100 000 000 to just 11 000, which corresponds to about a six-hour time difference during the attack brute-force. In practice, the introduction of such solutions resulted in the carrying out successful attacks on networks using encryption WPS has become feasible.
+
+<h2>Attacking encrypted networks WPS</h2>
+
+First we need to create in our laboratory the right point. access encrypted networks WPS. In our example router TP-Link mechanism WPS is enabled by default, which is a little disturbing, but very convenient. To be sure, however, we log on to our router and go to the WPS option. WPS encryption settings are shown in the first figure on the next page.
+
+Since we already know that WPS is configured correctly, we can proceed to set up our test environment. FOR attack will use a tool called Wash that to work properly it needs a network interface operating in monitor mode. To create such an interface, you should from the terminal window execute the command shown below:
+
+airmon-ng start wlan1
+
+Our network interface operating in monitor mode called wlan1mon, so we can now start the program Wash. To do this, you should be in a terminal window follow
+recommendation:
+
+wash --ignore-fcs -i wlan1mon
+
+Adding option --ignore-fcs is necessary because of the problems with the expected format requests, which causes the command wash.
+
+Wash program displays on the screen a list of all within range of devices that support WPS encryption, along with information about the version and whether WPS is active and unlocked.
+
+The results of the program shows that our network Wireless Lab supports WPS connection version 1, and that they are not blocked. Let us note now MAC address that will be needed to work with another tool, the program Reaver.
+
+The Reaver allows you to break the PIN encryption WPS for points. Access for the MAC address using the brute-force method.
+
+reaver -i wlan1mon -b -vv
+
+When you start the program checks all possible combinations of PIN encryption and WPS for each of them attempts to authenticate. When the attempt is successful, the program displays the recovered PIN and password, as shown in the figure below.
+
+Knowing the key WPA-PSK, you can without problems to connect to the targeted network. In our case, we left the default settings for WPA-PSK, which correspond to those WPS PIN. However, if you want to authenticate using the same PIN WPS, you can do so by entering a PIN in the command line prompt reaver, as shown here:
+
+reaver -i wlan1mon -b -vv -p
+
+Be sure to replace the PIN of our router appropriate code on your device.
+
+<h2>Data collection</h2>
+
+First of all, we will need a device that connects to multiple wireless networks. Typically, in such a role perfectly suited devices such as the iPhone and smartphones running on Android. Desktops usually would not be good targets because they are portable and most of the time are in one place. In newer models of iPhone and Android smartphones probing network can be disabled by default or coded, so before you give up, you should check the documentation for the device.
+
+Once you have selected the device at hand, make sure that it is enabled for Wi-Fi.
+
+Now create a network interface operating in monitoring mode, as it already did several times.
+
+In the next stage, we use the program tshark packet monitoring probing. To do this, you should execute the command shown below:
+
+tshark -n -i wlan1mon subtype probereq
+
+The results of this command can be quite confusing because the default format for the results of the program tshark was not designed for legibility, but the amount of data placed in them. Examples of the results of operations are presented below:
+
+The results of the program can be clearly seen probing packets with the MAC address and SSID network, although, if necessary, you can slightly modify the display format. To do this, you should execute the command shown below:
+
+tshark -n -i wlan1mon subtype probereq -T fields -e separator= -e wlan.sa -e wlan_mgt.ssid
+
+This time the results of the command tshark are much more readable.
+
+Now that we have the results of the program tshark displayed in a clear, readable format, we can create a suitable Python script that will execute this command and save the results to a file on disk for further analysis. Before running the script, we need to make sure that the network interface-mode monitor is ready for operation and that in the current working directory was created file called results.txt. Source code:
+
+import subprocess
+
+import datetime
+
+results = open("results.txt", "a")
+
+while 1:
+
+blah = subprocess.check_output(["tshark -n -i wlan1mon subtype probereq -T fields -e separator= -e wlan.sa -e wlan_mgt.ssid -c 100"], shell=True)
+
+splitblah = blah.split("\n")
+
+for alue in splitblah[:-1]:
+
+splitvalue = value.split("\t")
+
+MAC = str(splitvalue[1])
+
+SSID = str(splitvalue[2])
+
+time = str(datetime.datetime.now())
+
+And a brief description of the code:
+
+Instructions import subprocess and import datetime - import both libraries. Library subprocess allows you to monitor network interfaces from the command line console Linux, whereas in datetime library are functions that allow you to download the exact date and time values.
+While Statement 1 - makes the program runs in an endless loop (until stopped by the user)
+Instructions results = open ( "results.txt", "a") - executes the instructions of the program opens the file results.txt of the rights attaching to it new data and assign the file to the variable results. The right to append data to the file means that the script can only add new content to the file so that its previous contents will not be overwritten.
+Instructions blah = subprocess.check-output ([ "tshark -i -n wlan1mon subtype probereq -T fields separator = -e -e -e wlan.sa wlan_mgt.ssid c 100"], and executes it tested by us in advance tshark command. the only difference this time is the additional option -c 100, which restricts the program to 100 requests. With this solution, after capturing 100 requests the program will finish and we will be able to automatically move to the analysis of the results of the action without having to manually stop the program. Since our script running in an infinite loop, the results are saved tshark command of the script is resumed.
+Do all the instructions outlined above will download the results of the command tshark and assign them to a variable named blah.
+Instructions splitblah = blah.split ( "\ n") - means that the variable blah is divided into rows and assigned to a variable named splitblah
+Instructions for value in splitblah [: - 1] - is a loop that executes instructions below for each line of the content of variable splitblah, without first containing headers.
+Instructions splitvalue = value.split ( "\ t") - will further dividing lines into smaller pieces; as a separator individual fields using the tab character.
+The next three lines of code to collect additional field line results and assign them to -odpowiednich variables:MAC = str(splitvalue[1])
+
+SSID = str(splitvalue[2])
+
+time = str(datetime.datetime.now())
+
+Instructions results.write (MAC + "" + SSID + "" + time "\ r \ n") - combines the individual fields in a single line, separating them from each other by spaces, writes at the end of the line sequence of characters representing the carriage return and the establishment of a new line, and then writes the whole file on the disk.
+The result of the script is a text file formatted clearly the results of the command tshark.
+
+Summary
+
+We've learned to carry out attacks on the network using encryption WPS. We also showed how to use Python can integrate a variety of tools for testing and monitoring of wireless networks. It was already the last lesson I hope you enjoyed it and please lajkujcie page and pay the comments (without hate'ów) and share this page with colleagues, friends, etc. all of which are interested in Penetration Testing. Now I have a month break because of these tutorials do not have time to do other things but patience rest of the party will begin with a blank to make full.
+
+P.S "The End of the Mischief"
+
+WolfMan12333
+
+<h1>Attacks on the WLAN with WPA-Enterprise and Radius servers ("I solemnly swear that I'm plotting something bad") Part 8</h1>
+<h2>Server Configuration FreeRadius WPE</h2>
+
+Start a web browser and go to https://github.com/brad-anton/freeradius-wpe where you will find a description of the project, and lots more. The installation package can be downloaded directly at https://github.com/brad-anton/freeradius-wpe/raw/master/freeradius-server-wpe_2.1.12-1_i386.deb.
+
+After the download is complete, you should install the downloaded package. To do this, from a terminal window, do dpkg -i freeradius-server-wpe_2.1.12-1_i386.deb, and then click ldconfig.
+
+Setting up points. access using server FreeRadius WPE
+
+Connect one of the LAN ports point. Access to the Ethernet port of the computer is running Kali Linux. In our case it will be eth0. Activate interface using DHCP and assign the appropriate IP address, as shown in the figure below.
+
+Log on to the terminal configuration point. access and set him to work in WPA / WPA2-Enterprise. Version option set to WPA2, the encryption algorithm (optional Encryption) on AES. Then, in the Radius Server IP, type the IP address of your system Kali Linux. Password to the Radius server (Radius option Password) will be in our case the word test.
+
+Now open a new terminal window and navigate to the directory / usr / local / etc / raddb, which contains all the configuration files FreeRADIUS-WPE.
+
+Open the file and look for options eap.conf default_eap_type. By default this option is set to md5, so you should change it to PEAP and save the file.
+
+Open the file clients.conf. In this file you can define a list of clients that are authorized to connect to the Radius server. Please note that the password clients ( Secret) for the subnet 192.168.0.0/16 defaults to the test. Exactly the password we used in point. 2.
+
+Now you are ready to start Radius Server. To do this, you should from the terminal window execute radiusd -s -X.
+
+When you run this command, the screen will appear a large amount of diagnostic information, but after a while the server will start up and listen for incoming requests. Excellently! The configuration is now ready for use in subsequent experiments, which we will tell in a moment.
+
+<h2>Attacks on PEAP</h2>
+
+PEAP (ang. Protected Extensible Authentication Protocol) is the most widely used version of the EAP. PEAP is the default authentication mechanism is implemented and used in Windows.
+
+PEAP is available in two versions:
+
+PEAPv0 with EAP-MSCHAPv2 (ang. Extensible Authentication Protocol - Microsoft Challenge Handshake Authentication Protocol) - is used most often, because Windows has built-in support for this protocol. PEAPv1 with EAP-GTC (ang. Extensible Authentication Protocol - Generic Token Card).
+
+PEAP authentication server uses a certificate retrieved from the certificate store Radius server. Almost all attacks on PEAP exploit vulnerabilities in the configuration of the authentication certificates.
+
+Hacking PEAP
+
+Before you begin, you'll need more time to make sure that PEAP is enabled. To do this, refer to the file eap.conf.
+
+Run the Radius server by typing in a terminal window radiusd -s -X command.
+
+Identify monitoring the log file created by the server FreeRadius WPE by typing in a terminal window command converted shown in Figure reproduced below.
+
+Windows has built-in support for PEAP. Make sure that the verification of certificates was excluded.
+
+Press the Configure button () on the right side of the drop-down list Select Authentication Method (choose an authentication method), and tell Windows to not automatically use your login credentials (user account name and password).
+
+Go to the Advanced settings (advanced settings) and section Specify authentication mode (specify user authentication mode), as shown here.
+
+When Windows client connects to a point. access, on-screen dialog box appears requesting a user name and password. As a user name, type the Monster, and as the password abcdefghi:
+
+Immediately after the administration username and password, you can see that the RADIUS server log file appeared a string of calls and answers the call, generated during the authentication MSCHAP v2:
+
+Now you can use asleap to perform a dictionary attack on the password authentication. If you use the dictionary file contains a password abcdefghi, you'll be able to find them and break!
+
+for example:
+
+asleap -C fe:94:f3:d9:9b:13:54:b9 -R db:68:44:c6:7b:6d:f8:05:b2:1c:86:2f:0a:18:3b:d0:13:e0:21:00:f1:69:17:fc -W list
+
+Good practices securing corporate wireless networks
+
+So far, we've covered a lot of different attacks on WPA / WPA2, in both PSK and Enterprise. Thanks to our experience we can recommend the following solutions:
+
+In small and medium-sized enterprises and organizations you should use WPA2 PSK with a strong password. You have up to 63 characters make good use of them. In the case of large companies and corporations will be recommended for use WPA-Enterprise with EAP-TLS. This solution uses certificates for authentication on the side of both server and client, and is currently regarded as practically impossible to break. If for one reason or another are forced to use WPA2-Enterprise with PEAP or EAP-TTLS, you should make sure that the verification of certificates is turned on, using appropriate trusted CAs, use only authorized servers Radius and that all other options allowing the user to accept the new Radius server, other certificates or CAs, are excluded.
+
+Summary
+
+We adapted the server configuration FreeRadius and we made an attack on WPA-Enterprise authentication with PEAP or EAP-TTLS.
+
+WolfMan12333
+
+<h1>Advanced attacks on WLAN ("I solemnly swear that I'm plotting something bad") Part 9</h1>
+<h2>Attack of the Man-in-the-Middle</h2>
+
+To prepare the environment to attack Man-in-the-Middle, you need a computer that you use to carry out attacks, to create a software access point network called MitM. To do this, you should open a terminal window and execute the command shown below:
+airbase-ng --essid mitm -c 11 wlan1mon
+
+The results of this command is shown below:
+
+Note that the command airbase-ng after running creates interface AT0 interface (TAP), which should be treated as a cable page programming interface AP MitM.
+
+On the computer you are using to attack, you need to create a network bridge, consisting of interface cable (eth0) and wireless interface (AT0). To do this, you should turn the following commands:
+
+brctl addbr mitm-bridge
+
+brctl addif mitm-bridge eth0
+
+brctl addif mitm-bridge at0
+
+ifconfig eth0 0.0.0.0 up
+
+ifconfig at0 0.0.0.0 up
+
+Network Bridge, you can assign an IP address and see if the connection to the default gateway network is working properly. It is worth noting that the same thing can be done using DHCP. To assign an IP address to the bridge network, a terminal window, type the following command:ifconfig mitm-bridge 192.168.0.199 up
+Then use the ping command to check the connection to the default gateway 192.168.0.1, so we can make sure that we have a connection to the rest of the network.
+
+The next step is to incorporate the kernel packet forwarding option (IP. IP Forwarding), through which it will be possible to route and transfer of IP packets between networks. To do this, click below:
+echo > 1 /proc/sys/net/ipv4/ip_forward
+
+Now you can connect your wireless client to the point. Access called MitM. After you connect the client via DHCP automatically receive an IP address (the server running the cable side of the gateway). In our case, the client received the address 192.168.0.197. To check the operation of the network connection to the gateway, you can now use the command ping 192.168.0.1, as shown in the following figure.
+
+As you can see below, the host responds to the ping 192.168.0.1, so the connection to the gateway network is working properly.
+
+After checking the connection to the gateway network we need to check whether the client is connected to the point. AP. To do this, you should look into the terminal window in which it operates command airbase-ng
+
+It is worth noting that because all traffic is transmitted from the wireless interface to a wired network, you have complete control over the movement. You can see this by running Wireshark and start monitoring packets on the interface AT0.
+
+Now from the client, ping 192.168.0.1, and note that the window of Wireshark shows all packets sent between the client and the gateway network (switch filter to display only ICMP), despite the fact that these packages are not intended for You. That is the true strength of the attack Man-in-the-Middle! (Unfortunately I here did not initially connect enough at this point to show you the captured ICMP, I hope that you are not discouraged to try).
+
+Eavesdropping traffic on the wireless network
+
+Play the entire configuration used in the previous exercise. Launch Wireshark - watching network traffic before you even start the bridge MitM-bridge can be quite an interesting exercise. Wireshark will help us later to observe all traffic passing through the network bridge.
+
+Start listening for traffic on the interface AT0, so you can monitor all packets sent and received by the wireless client.
+
+Go to the client, start a web browser and go to any web page. In our case the point. Access is connected to the LAN, so we can open the terminal configuration, who enters in the web browser address https://192.168.0.1
+
+To log in to the point. access, enter the name USER and a password.
+
+In the Wireshark should have seen a large number of packets sent over a wireless network.
+
+Set the filter so that Wireshark display only HTTP packets.
+
+As you can see, you can easily locate the HTTP POST request, which was used to send the password to the terminal configuration AP.
+
+The following are the contents of the package highlighted on the previous figure.
+
+Develop the content of the HTTP header can be noted that the same password that was entered when logging on to the point. Access is not transmitted - instead sent a hash value of the password (ang. hash). If you look at the contents of the package marked in the previous figure number [to enter], you will notice that the request has been sent a script /md5.js, allowing you suspect that your password hash function uses an algorithm md5. It is worth noting that if an algorithm to create a hash function does not use salt cryptographic (ang. Cryptographic salt), otherwise known as reduced-string, such a technique can be vulnerable to attack based on repetition packets. Finding the necessary details you can be treated as a separate task, because it is not directly related to the free. wireless network and a detailed discussion of this issue goes far beyond this course.
+
+Session Hijacking wireless networks
+
+Prepare a laboratory in such a configuration, which we used in the previous exercises attacks Man-in-the-Middle. On the victim's computer, start a web browser and go to https://www.google.com, while monitoring the thus generated motion using Wireshark. The window of the program should look something like the following:
+
+In the Wireshark set the filter so that it only shows the frame of the DNS protocol. As you can see below, the victim's computer sends a DNS request for the address https://google.com
+
+To capture browsing sessions, you need to send to the victims of fake DNS responses that will show that the https://google.com corresponds to the IP address 192.168.0.199, which is actually the IP address of the attacker. For these nefarious purposes, use the dnsspoof. To do this, in a terminal window you enter the command shown below:
+
+dnsspoof -i mitm-bridge
+
+The results of this command are shown below:
+
+Refresh your web browser. From that moment, as is clearly visible in the Wireshark, each time when the victim sends a DNS request for any host (including google.com), the response is sent by the program Dnsspoof.
+
+In the browser window on the victim's computer now shows an error message, indicating the refusal of the merger. This happens because the victim's computer, trying to connect to the service google.com, actually connects to your attacker with the address 192.168.0.199, except that for the time being on port 80 of the computer has not yet launched any service.
+
+To change this, start now Apache (supplied with Kali Linux distribution). Open a terminal window and issue the command shown below:
+
+apache2ctl start
+
+The results of this command are shown below:
+
+If now again refresh your browser window web on the victim's computer, the screen displays the default Apache page.
+Discovering the security profiles for wireless clients
+
+Exercise start from the assumption that the customer who is the object of attack was set for a network called Wireless Lab and when it is not connected to any point. Access actively sends probe packets in search of the network. To discover the security configuration of the network, you need to create some points. access of different configurations. For this exercise, assume that the client is prepared to work in one of the following configurations:
+authentication open access, WEP, WPA PSK, WPA2 PSK. This means that you need to create four points. Access. To do this, you must first create four virtual network interfaces, named respectively wlan1mon, wlan2mon, wlan3mon, wlan4mon. You make it by repeated execution airmon-ng start wlan1, as shown below:
+
+To view the screen all newly created interfaces, you should execute the command ifconfig -a, as shown here:
+(It should be the other interfaces but needs a practical approach to the issue showed what I could create the last)
+
+Now you can start to create the first point. the access interface using wlan1mon and authentication of open access.
+
+The interface wlan 1mon create a point. access with WEP encryption.
+
+Interface wlan2mon use to create the point. access with WPA PSK.
+
+Finally, the last interface wlan3mon, will be used to create a point. access encrypted WPA2 PSK.
+
+To verify that all 4 points. Access work properly use the command airodump-ng to listen on the same channel.
+
+After you create the points. Access can enable the wireless adapter on the client. Depending on the network in which the Wireless Lab recently used client automatically connects to the point. the access of such security configuration. In our case, the client plugged in to the point. access networks with WPA PSK.
+
+Summary
+
+Reconfigured MitM, we overheard movement and intercepted session applications (web browser) by an attack based on spoofing DNS replies.
+
+WolfMan12333
+        </pre></a>
+    </div>
+</body>
+</html>
