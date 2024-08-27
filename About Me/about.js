@@ -1,3 +1,7 @@
+function btnhome() {
+    document.location.href = '../index.html';
+}
+
 var windowHeight = $('#intro').height();
 var windowWidth = $('#intro').width();
 
@@ -52,3 +56,4 @@ sky.src = canvas.toDataURL("image/png");
 $('#intro').css("background", "url(" + sky.src + ")");
 ctx.restore();
 ctx.save();
+
