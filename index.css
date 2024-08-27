@@ -97,3 +97,17 @@
   width: 100%;
   padding: 20px;
 }
+
+/* Home button*/
+.btnhome {
+  background-color: Red;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btnhome:hover {
+  background-color: RoyalRed;
+}
