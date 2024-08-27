@@ -133,3 +133,17 @@ audio {
     -o-animation-duration: 5s; /*7s*/
     -o-animation-iteration-count: 1;
 }
+
+/* Home button*/
+.btnhome {
+  background-color: Red;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btnhome:hover {
+  background-color: RoyalRed;
+}
