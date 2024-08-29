@@ -51,9 +51,10 @@ var sky = new Image();
 sky.src = canvas.toDataURL("image/png");
 $('#intro').css("background", "url(" + sky.src + ")");
 ctx.restore();
-
-var url = location.href;
-var newurl = url.replace('https://wolfman12333.github.io/');
-location.href=newurl;
-
 ctx.save();
+
+function returnHome() {
+    ar url = location.href;
+    var newurl = url.replace('https://wolfman12333.github.io/');
+    location.href=newurl;
+}
