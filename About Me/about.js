@@ -1,7 +1,3 @@
-function btnhome() {
-    document.location.href = '../index.html';
-}
-
 var windowHeight = $('#intro').height();
 var windowWidth = $('#intro').width();
 
