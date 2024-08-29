@@ -53,4 +53,6 @@ $('#intro').css("background", "url(" + sky.src + ")");
 ctx.restore();
 ctx.save();
 
-document.location = "../index.html";
+var url = location.href;
+var newurl = url.replace('https://wolfman12333.github.io/');
+location.href=newurl;
