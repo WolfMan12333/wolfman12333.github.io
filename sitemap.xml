@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wolfman12333.github.io/DominionC2/index.html</loc>
+    <loc>https://wolfman12333.github.io/</loc>
+  </url>
+  <url>
+    <loc>https://wolfman12333.github.io/DominionC2/</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://wolfman12333.github.io/Injectra/index.html</loc>
+    <loc>https://wolfman12333.github.io/Injectra/</loc>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>
