@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DominionC2 – Advanced Mobile C2 Platform</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #0a0a0a, #1b0f1f);
+      color: #eee;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 4rem 1rem 2rem 1rem;
+      animation: fadeIn 1.5s ease-out;
+    }
+    header img {
+      height: 120px;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #ff305f;
+      animation: slideDown 1s ease-out;
+    }
+    p {
+      font-size: 1.1rem;
+      color: #ccc;
+      animation: fadeIn 2s ease-in;
+    }
+    .section {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+      animation: fadeIn 2s ease-in;
+    }
+    .section h2 {
+      color: #ff305f;
+      margin-bottom: 1rem;
+    }
+    .section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .section li {
+      margin: 0.7rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .section li::before {
+      content: '\2022';
+      position: absolute;
+      left: 0;
+      color: #ff305f;
+      font-size: 1.2rem;
+    }
+    .cta {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .cta a {
+      background-color: #ff305f;
+      color: #fff;
+      padding: 0.75rem 2rem;
+      margin: 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+    .cta a:hover {
+      transform: scale(1.05);
+      background-color: #ff4d78;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="dominion_logo.png" alt="DominionC2 Logo" />
+    <h1>DominionC2 – Advanced Mobile Command & Control Platform</h1>
+    <p>Control Android & iOS agents, capture camera/screen, assign remote tasks — all in one powerful C2 interface.</p>
+  </header>
+
+  <div class="section">
+    <h2>Core Capabilities</h2>
+    <ul>
+      <li>Camera Recording: Front & Back</li>
+      <li>Screen Recording with Silent Upload</li>
+      <li>Modular Task Execution System</li>
+      <li>Multi-agent Panel & Device Registry</li>
+      <li>File Access, Listing, Download</li>
+      <li>Command Queue per Agent</li>
+      <li>Cross-platform Ready (Android & iOS)</li>
+    </ul>
+    <div class="cta">
+      <a href="#">Live Demo</a>
+      <a href="#">Request Access</a>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 DominionC2 by WolfMan12333. All rights reserved.
+  </footer>
+</body>
+</html>
