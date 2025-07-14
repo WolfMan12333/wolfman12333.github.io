@@ -1,1 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WolfMan12333 - Terminal</title>
+  <link rel="stylesheet" href="index.css" />
+  <script src="index.js" defer></script>
+</head>
+<body>
+  <!-- Ładowanie intro -->
+  <video autoplay muted id="overlayVideo">
+    <source src="aircrack.mp4" type="video/mp4">
+  </video>
+  <div id="access-text">ACCESS GRANTED - Welcome</div>
 
+  <!-- Główne tło glitch -->
+  <video autoplay muted loop id="myVideo" style="display: none">
+    <source src="rainbow_glitch_intro_final.mp4" type="video/mp4">
+  </video>
+
+  <!-- Menu główne -->
+  <div class="content" style="display: none">
+    <button id="btn-horror" onclick="aboutmebtn()">About Me</button>
+    <button id="btn-starwars" onclick="projectsbtn()">Projects</button>
+    <button id="btn-stargate" onclick="tutbtn()">Tutorials</button>
+    <button id="btn-matrix" onclick="contactbtn()">Contact</button>
+  </div>
+</body>
+</html>
