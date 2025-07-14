@@ -39,6 +39,8 @@
 .content {
   position: fixed;
   bottom: 0;
+  right: 0;
+  left: 0;
   width: 100%;
   padding: 20px;
   background: rgba(29, 27, 27, 0.85);
@@ -46,6 +48,8 @@
   justify-content: center;
   gap: 10px;
   z-index: 4;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .content button {
