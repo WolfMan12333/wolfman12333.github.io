@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Features – SpectraBurn</title>
+  <link rel="stylesheet" href="style.css" />
+   <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Courier New', monospace;
+        background-color: #000;
+        color: #00ffcc;
+        overflow-x: hidden;
+    }
+
+    .page-container {
+        z-index: 2;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .features-section {
+        padding: 1rem 1rem 1rem;
+        text-align: center;
+        z-index: 2;
+    }
+
+    .back-home {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #00ffff;
+        color: #000;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-home:hover {
+        background-color: #33ffd8;
+    }
+    
+    .work-in-progress {
+      font-size: 0.9rem;
+      color: #ffcccc;
+      margin-top: -0.5rem;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="bg-video">
+    <source src="spectraburn_ultra_ambient.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+
+  <div class="page-container">
+    <section class="features-section">
+        <h1 class="glitch-text">Key Features</h1>
+        <p class="work-in-progress">🚧 Work in progress - features are being actively developed!</p>
+        <ul class="features-list">
+            <li>Payload Encoding Engine</li>
+            <li>Source Code Analyzer (AST/Regex Hybrid) ✅ Partial Done</li>
+            <li>Web Scanner (WAF Bypass, SQLi, XSS, RCE) (❌ coming soon)</li>
+            <li>Obfuscation Toolkit</li>
+            <li>HTTP Request Injector (❌ coming soon)</li>
+            <li>Session Hijacking Toolkit (❌ coming soon)</li>
+            <li>Export: PDF/JSON (❌ coming soon)</li>
+            <li>Burp Suite Plugin Mode (❌ coming soon)</li>
+            <li>AI-Assisted Vulnerability Scoring (❌ coming soon)</li>
+            <a href="index.html" class="back-home">← Back to Home</a>
+        </ul>
+        <footer>
+            &copy; 2025 SpectraBurn by WolfMan12333. All rights reserved.
+        </footer>
+    </section>
+  </div>
+</body>
+</html>
