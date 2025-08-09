@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DominionC2 – Docs</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.png" />
+</head>
+<body>
+  <video autoplay muted loop playsinline id="bg-video">
+  </video>
+
+  <div class="overlay"></div>
+
+  <header>
+    <img src="dominion_logo.png" alt="DominionC2 Logo" class="logo" />
+    <h1>DominionC2 – Documentation</h1>
+  </header>
+
+  <div class="back-button-container">
+    <a href="index.html" class="back-button">← Back to Home</a>
+  </div>
+
+  <main class="docs-content">
+    <section>
+      <h2>Overview</h2>
+      <p>DominionC2 is an advanced mobile command-and-control platform developed for red team operators, stealth monitoring, and post-exploitation on Android devices.</p>
+    </section>
+
+    <section>
+      <h2>Installation</h2>
+      <pre><code>
+git clone https://github.com/WolfMan12333/DominionC2.git
+cd DominionC2
+python3 -m venv dominionenv
+source dominionenv/bin/activate
+pip install -r requirements.txt
+python app.py
+      </code></pre>
+    </section>
+
+    <section>
+      <h2>Features</h2>
+      <ul>
+        <li>📱 Screen recording (Android)</li>
+        <li>📷 Dual camera capture</li>
+        <li>📤 File upload & exfiltration</li>
+        <li>🕵️‍♂️ Command-based C2 control</li>
+        <li>🔒 Persistence & stealth</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Web Panel Access</h2>
+      <p>Open <code>http://localhost:4444</code> in your browser to access the control panel interface.</p>
+    </section>
+
+    <section>
+      <h2>Support</h2>
+      <p>For issues or feature requests, please contact <strong>WolfMan12333</strong> or open an issue on GitHub.</p>
+    </section>
+  </main>
+
+  <footer class="mainfooter">
+    <p>&copy; 2025 DominionC2 by Dawid (WolfMan12333) Wordliczek. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

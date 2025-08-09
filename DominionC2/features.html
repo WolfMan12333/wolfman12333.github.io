@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DominionC2 – Features</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.png" />
+  <style>
+    body {
+      background: linear-gradient(to bottom, #0a0a0a, #1b0f1f);
+      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 2rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      color: #ff305f;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      color: #ccc;
+      font-size: 1.1rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-column {
+      background: rgba(255, 48, 95, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 0 15px rgba(255, 48, 95, 0.3);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .feature-column h3 {
+      color: #ff305f;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+
+    .feature-column ul {
+      list-style: none;
+      padding-left: 1.2rem;
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .feature-column li {
+      position: relative;
+      margin: 0.6rem 0;
+      padding-left: 1.5rem;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .feature-column li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #ff305f;
+      font-weight: bold;
+    }
+
+    /* Responsive fallback: stack columns on smaller screens */
+    @media (max-width: 900px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .feature-column {
+        margin-bottom: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <video autoplay muted loop playsinline id="bg-video">
+  </video>
+
+  <header>
+    <img src="dominion_logo.png" alt="DominionC2 Logo" class="logo" />
+    <h1 class="glitch-text">Core Capabilities</h1>
+    <p class="tagline">Stealth Monitoring. Modular Commands. Full Mobile Control.</p>
+  </header>
+
+  <div class="cta">
+      <a href="index.html">Back to Home</a>
+      <a href="docs.html">Documentation</a>
+  </div>
+
+  <section class="features-grid">
+    <div class="feature-column">
+      <h3>Android Features</h3>
+      <ul>
+        <li>Contacts & Messages Access (contacts, SMS, call logs)</li>
+        <li>Location & Data Retrieval (GPS, clipboard, photos)</li>
+        <li>Media Recording (audio, screen, front & back cameras)</li>
+        <li>File Management & Remote Commands</li>
+        <li>Report Export (CSV, PDF, XLSX)</li>
+        <li>UI Personalization (dark/light mode, IP config)</li>
+        <li>Device Management & Aliases</li>
+      </ul>
+    </div>
+
+    <div class="feature-column">
+      <h3>iOS Features</h3>
+      <ul>
+        <li>Contacts & Messages Access (contacts, SMS, call logs)</li>
+        <li>Location & Media Capture (GPS, photos, audio, cameras)</li>
+        <li>Stealth Mode & App Hiding</li>
+        <li>Remote File Transfer & Shell Access</li>
+        <li>Report Generation & Data Export</li>
+        <li>UI & Network Configuration</li>
+        <li>Multi-Device Alias Management</li>
+      </ul>
+    </div>
+
+    <div class="feature-column">
+      <h3>Cross-Platform Features</h3>
+      <ul>
+        <li>Full Android & iOS Compatibility</li>
+        <li>Unified Control Panel & Task Management</li>
+        <li>Data Exfiltration (photos, history, clipboard)</li>
+        <li>Live & Silent Media Recording</li>
+        <li>Persistence & Stealth Operations</li>
+        <li>Comprehensive Export Options</li>
+        <li>Dynamic UI & Alias Configuration</li>
+      </ul>
+    </div>
+  </section>
+  <footer class="mainfooter">
+    &copy; 2025 DominionC2 by Dawid (WolfMan12333) Wordliczek. All rights reserved.
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

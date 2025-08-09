@@ -1,0 +1,16 @@
+{
+  "name": "DominionC2",
+  "short_name": "Dominion",
+  "description": "Advanced Mobile C2 Platform by WolfMan12333",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#0a0a0a",
+  "background_color": "#1b0f1f"
+}
