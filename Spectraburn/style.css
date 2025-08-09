@@ -36,8 +36,11 @@ header {
 }
 
 .logo {
+  display: block;
+  margin: 0 auto 1rem auto;
+  width: clamp(240px, 18vw, 360px);
   height: auto;
-  width: 200px;
+  filter: drop-shadow(0 0 10px #00ffe0);
 }
 
 .glitch-text {

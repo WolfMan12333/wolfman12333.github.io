@@ -1,0 +1,16 @@
+{
+  "name": "SpectraBurn",
+  "short_name": "SpectraBurn",
+  "description": "Web Exploitation & Static Code Review Suite by Dawid (WolfMan12333) Wordliczek",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#0a0a0a",
+  "background_color": "#1b0f1f"
+}

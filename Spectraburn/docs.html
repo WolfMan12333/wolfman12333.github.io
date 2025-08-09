@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SpectraBurn – Documentation</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.png" />
   <style>
     body {
       margin: 0;
@@ -125,7 +126,6 @@
     <a href="#intro">Introduction</a>
     <a href="#setup">Installation</a>
     <a href="#features">Core Features</a>
-    <a href="#custom-headers">Custom Headers & Header Randomization</a>
     <a href="#ai">AI Mode</a>
     <a href="#integrations">Integrations</a>
     <a href="#security">Security</a>
@@ -133,7 +133,7 @@
     <a href="#contact">Contact</a>
     <a href="index.html" class="back-home">← Back to Home</a>
     <footer>
-        &copy; 2025 SpectraBurn by Dawid (WolfMan12333) Wordliczek.<br />
+        &copy; 2025 SpectraBurn by WolfMan12333.<br />
         All rights reserved.
     </footer>
   </nav>
@@ -160,44 +160,6 @@
       <li><strong>Source Obfuscator</strong> – Minify or obfuscate target JS/PHP/Python.</li>
       <li><strong>Static Scanner</strong> – Signature-based static analysis of repo files.</li>
       <li><strong>Reporting</strong> – Export results to PDF, CSV, JSON.</li>
-    </ul>
-
-    <h2 id="custom-headers">Custom Headers & Header Randomization</h2>
-    <ul>
-      <li>
-        <strong>Stealth Header Randomization</strong> – Each scan uses randomized HTTP headers for advanced WAF evasion, including <code>Referer</code>, <code>Accept</code>, <code>X-Forwarded-For</code>, and more.
-      </li>
-      <li>
-        <strong>Bring Your Own Headers</strong> – Upload a <code>custom_headers.json</code> file with your own header sets for precise control and fingerprint mimicry.
-      </li>
-      <li>
-        <strong>How To Use:</strong>
-        <ul>
-          <li>Create a JSON file (e.g., <code>custom_headers.json</code>) containing an array of header dictionaries.</li>
-          <li>In the GUI, go to <strong>Advanced &rarr; Headers</strong> and select your custom file.</li>
-        </ul>
-      </li>
-      <li>
-        <strong>Example <code>custom_headers.json</code>:</strong>
-        <pre><code>[
-      {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-        "Referer": "https://www.google.com/",
-        "Accept": "text/html,application/xhtml+xml",
-        "X-Forwarded-For": "1.2.3.4"
-      },
-      {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
-        "Referer": "https://github.com/",
-        "Accept": "application/json",
-        "X-Forwarded-For": "5.6.7.8"
-      }
-    ]</code></pre>
-      </li>
-      <li>
-        <strong>Tip:</strong> When a custom file is provided, each request uses a random (or cycling) header set from your list.<br>
-        If no file is loaded, SpectraBurn uses its built-in randomized headers.
-      </li>
     </ul>
 
     <h2 id="ai">AI Mode</h2>
