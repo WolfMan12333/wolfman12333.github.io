@@ -134,3 +134,84 @@
   .dot.ldap{background:#ffd36e}
   .dot.xml{background:#ff9dbc}
   .dot.misc{background:#cda8ff}
+
+/* Styl dla przycisku przełączania */
+.toggle-btn {
+  background: #192332;
+  border: 1px solid #2a3a4d;
+  color: var(--ink);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.toggle-btn:hover {
+  background: #1d2938;
+}
+
+.hamburger-icon {
+  font-size: 16px;
+}
+
+/* Klasy pomocnicze dla ukrytego paska */
+.app.hide-left {
+  grid-template-columns: 0 1fr 380px;
+}
+
+.app.hide-left .left {
+  display: none;
+}
+
+/* Responsywność dla mniejszych ekranów */
+@media (max-width: 1200px) {
+  .app {
+    grid-template-columns: 280px 1fr 340px;
+  }
+}
+
+@media (max-width: 992px) {
+  .app {
+    grid-template-columns: 0 1fr 0;
+    transition: all 0.3s ease;
+  }
+  
+  .app.show-left {
+    grid-template-columns: 280px 1fr 0;
+  }
+  
+  .app.show-right {
+    grid-template-columns: 0 1fr 340px;
+  }
+  
+  .left, .right {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+    overflow-y: auto;
+  }
+  
+  .left {
+    left: -280px;
+    width: 280px;
+    transition: left 0.3s ease;
+  }
+  
+  .app.show-left .left {
+    left: 0;
+  }
+  
+  .right {
+    right: -340px;
+    width: 340px;
+    transition: right 0.3s ease;
+  }
+  
+  .app.show-right .right {
+    right: 0;
+  }
+}

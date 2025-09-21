@@ -4929,10 +4929,55 @@ function setupPanAndZoom() {
   });
 }
 
+// Dodaj te zmienne globalne
+let leftSidebarVisible = true;
+
+// Dodaj tę funkcję do obsługi przełączania lewego paska
+function setupSidebarToggle() {
+  const toggleBtn = document.getElementById('toggleLeftSidebar');
+  const app = document.querySelector('.app');
+  
+  // Sprawdź zapisany stan w localStorage
+  const savedState = localStorage.getItem('leftSidebarVisible');
+  if (savedState !== null) {
+    leftSidebarVisible = savedState === 'true';
+  }
+  
+  // Ustaw początkowy stan
+  if (!leftSidebarVisible) {
+    app.classList.add('hide-left');
+    toggleBtn.querySelector('span:last-child').textContent = 'Pokaż lewy pasek';
+  }
+  
+  // Dodaj nasłuchiwanie kliknięcia
+  toggleBtn.addEventListener('click', () => {
+    leftSidebarVisible = !leftSidebarVisible;
+    
+    if (leftSidebarVisible) {
+      app.classList.remove('hide-left');
+      toggleBtn.querySelector('span:last-child').textContent = 'Ukryj lewy pasek';
+    } else {
+      app.classList.add('hide-left');
+      toggleBtn.querySelector('span:last-child').textContent = 'Pokaż lewy pasek';
+    }
+    
+    // Zapisz stan w localStorage
+    localStorage.setItem('leftSidebarVisible', leftSidebarVisible);
+    
+    // Ponowne renderowanie, aby dostosować do nowych wymiarów
+    setTimeout(() => {
+      draw(DATA, currentFilter, currentQuery);
+    }, 300);
+  });
+}
+
 function boot(){
   layout(DATA);
   draw(DATA);
   renderDetails(DATA.children[1]); // focus SQLi by default
+
+  // Init belt hiding
+  setupSidebarToggle();
 
   document.querySelectorAll('.chip').forEach(ch=>{
     ch.onclick=()=>{
