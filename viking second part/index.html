@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Interactive Golden Path</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>Interactive Golden Path</h1>
+        <div class="subtitle">Left → Right attack flow • Click nodes to expand • Details & payloads appear on the right</div>
+      </div>
+    </header>      
+    <aside class="left">
+      <div class="title">Filters</div>
+      <div class="controls">
+        <div class="chip active" data-filter="all">All</div>
+        <div class="chip" data-filter="InfoDisclosure">InfoDisclosure</div>
+        <div class="chip" data-filter="AuthTesting">AuthTesting</div>
+        <div class="chip" data-filter="OAuth">OAuth</div>
+        <div class="chip" data-filter="JWT">JWT</div>
+        <div class="chip" data-filter="SessionMgmt">SessionMgmt</div>
+        <div class="chip" data-filter="AccessControl">AccessControl</div>
+        <div class="chip" data-filter="BusinessLogic">BusinessLogic</div>
+        <div class="chip" data-filter="PathTraversal">PathTraversal</div>
+        <div class="chip" data-filter="SSTI">SSTI</div>
+        <div class="chip" data-filter="CommandInjection">CommandInjection</div>
+        <div class="chip" data-filter="XSS">XSS</div>
+        <div class="chip" data-filter="CSRF">CSRF</div>
+        <div class="chip" data-filter="Prototype">Prototype Pollution</div>
+        <div class="chip" data-filter="CORS">CORS</div>
+        <div class="chip" data-filter="Clickjacking">Clickjacking</div>
+        <div class="chip" data-filter="DOM-Based">DOM-Based</div>
+        <div class="chip" data-filter="SQLi">SQLi</div>
+        <div class="chip" data-filter="NoSQL">NoSQL</div>
+        <div class="chip" data-filter="LDAP">LDAP</div>
+        <div class="chip" data-filter="XML">XML/XXE</div>
+        <div class="chip" data-filter="ORM">ORM</div>
+        <div class="chip" data-filter="SSRF">SSRF</div>
+        <div class="chip" data-filter="Deserialization">Deserialization</div>
+        <div class="chip" data-filter="Race">Race Conditions</div>
+        <div class="chip" data-filter="FileUpload">File Upload</div>
+        <div class="chip" data-filter="API">API Testing</div>
+        <div class="chip" data-filter="GraphQL">GraphQL</div>
+        <div class="chip" data-filter="WebSocket">WebSocket</div>
+        <div class="chip" data-filter="WCD">Web Cache Deception</div>
+        <div class="chip" data-filter="WCP">Web Cache Poisoning</div>
+        <div class="chip" data-filter="HostHeader">Host Header Attack</div>
+        <div class="chip" data-filter="HRS">HTTP Request Smuggling</div>
+        <div class="chip" data-filter="LLM">LLM Attacks</div>
+      </div>
+      <div class="search">
+        <input id="search" placeholder="Search titles & payloads (e.g. UNION, SLEEP, $ne, DOCTYPE)…" />
+        <button class="btn" id="clearSearch">Clear</button>
+      </div>
+      <div class="section">
+        <div class="title small">Legend</div>
+        <div class="tree-legend small">
+          <div class="legend"><div class="dot infodisclosure"></div>Information Disclosure</div>
+          <div class="legend"><div class="dot authtesting"></div>Authentication</div>
+          <div class="legend"><div class="dot oauth"></div>OAuth Authentication</div>
+          <div class="legend"><div class="dot jwt"></div>JWT Attacks</div>
+          <div class="legend"><div class="dot sessionmgmt"></div>Session Management</div>
+          <div class="legend"><div class="dot accesscontrol"></div>Access Control</div>
+          <div class="legend"><div class="dot businesslogic"></div>Business Logic Vulnerabilities</div>
+          <div class="legend"><div class="dot pathtraversal"></div>Path Traversal</div>
+          <div class="legend"><div class="dot ssti"></div>Server-Side Template Injection</div>
+          <div class="legend"><div class="dot commandinjection"></div>Command Injection</div>
+          <div class="legend"><div class="dot xss"></div>XSS</div>
+          <div class="legend"><div class="dot csrf"></div>CSRF</div>
+          <div class="legend"><div class="dot prototype"></div>ProtoPoll</div>
+          <div class="legend"><div class="dot cors"></div>CORS</div>
+          <div class="legend"><div class="dot clickjacking"></div>Clickjacking</div>
+          <div class="legend"><div class="dot dom-based"></div>DOM-Based</div>
+          <div class="legend"><div class="dot sql"></div>SQL Injection</div>
+          <div class="legend"><div class="dot nosql"></div>NoSQL</div>
+          <div class="legend"><div class="dot ldap"></div>LDAP</div>
+          <div class="legend"><div class="dot xml"></div>XML/XXE</div>
+          <div class="legend"><div class="dot misc"></div>Other (ORM)</div>
+          <div class="legend"><div class="dot ssrf"></div>SSRF</div>
+          <div class="legend"><div class="dot deserialization"></div>Deserialization</div>
+          <div class="legend"><div class="dot race"></div>Race Conditions</div>
+          <div class="legend"><div class="dot fileupload"></div>File Upload</div>
+          <div class="legend"><div class="dot api"></div>API Testing</div>
+          <div class="legend"><div class="dot graphql"></div>GraphQL</div>
+          <div class="legend"><div class="dot websocket"></div>WebSocket</div>
+          <div class="legend"><div class="dot wcd"></div>Web Cache Deception</div>
+          <div class="legend"><div class="dot wcp"></div>Web Cache Poisoning</div>
+          <div class="legend"><div class="dot hostheader"></div>Host Header Attack</div>
+          <div class="legend"><div class="dot hrs"></div>HTTP Request Smuggling</div>
+          <div class="legend"><div class="dot llm"></div>LLM Attacks</div>
+        </div>
+      </div>
+      <div class="section">
+        <button class="btn ghost" id="expandAll">Expand all</button>
+        <button class="btn ghost" id="collapseAll">Collapse all</button>
+      </div>
+      <div class="section">
+        <div class="hint small">Tip: Click a node to see copy‑ready payloads and terminal commands/tools. Use filters or search to declutter.</div>
+      </div>
+    </aside>
+
+    <main class="center">
+      <svg id="canvas"></svg>
+    </main>
+
+    <aside class="right">
+      <div class="panel">
+        <div class="title" id="detailTitle">Select a node</div>
+        <div class="muted" id="detailTag"></div>
+        <div class="section" id="detailDesc"></div>
+
+        <div class="section" id="detailPayloads"></div>
+        <div class="section" id="detailCommands"></div>
+        <div class="section" id="detailTools"></div>
+        <div class="section" id="detailNotes"></div>
+      </div>
+    </aside>
+
+    <footer>
+      Built for you — offline, single‑file MVP. Extend `DATA` to add more branches (XSS, SSRF, RCE, etc.).
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

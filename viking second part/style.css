@@ -1,0 +1,136 @@
+:root{
+    --bg:#0b0f14;--panel:#11171f;--panel2:#0e141b;--ink:#e7eef7;--muted:#9db0c9;--accent:#69e2ff;--accent2:#8ef6c8;--danger:#ff6b6b;--good:#a0ff9d;
+    --node:#121a23;--nodeBorder:#2a3a4d;--nodeHover:#162231;--edge:#2c3e50;--chip:#192332;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+  .app{display:grid;grid-template-columns: 320px 1fr 380px;grid-template-rows:auto 1fr;min-height:100vh}
+  header{grid-column:1/4;display:flex;align-items:center;gap:16px;padding:14px 18px;border-bottom:1px solid #1d2733;background:linear-gradient(180deg,#0f141b,#0b0f14)}
+  h1{margin:0;font-size:18px;font-weight:700;letter-spacing:0.2px}
+  .subtitle{color:var(--muted)}
+  .left{border-right:1px solid #1d2733;background:var(--panel);padding:14px;overflow:auto}
+  .center{position:relative;overflow:auto;background:var(--panel2)}
+  .right{border-left:1px solid #1d2733;background:var(--panel);padding:14px;overflow:auto}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .chip{background:var(--chip);color:var(--ink);border:1px solid #223041;padding:6px 10px;border-radius:999px;cursor:pointer}
+  .chip.active{outline:2px solid var(--accent)}
+  .search{width:100%;margin:10px 0 6px;display:flex;gap:8px}
+  .search input{flex:1;background:#0c1219;border:1px solid #223041;color:var(--ink);border-radius:10px;padding:10px 12px}
+  .btn{background:#0f1620;border:1px solid #223041;color:var(--ink);padding:8px 10px;border-radius:10px;cursor:pointer}
+  .btn.primary{border-color:#1e3b4d;background:#11283a;color:#d6f7ff}
+  .btn.ghost{background:transparent}
+
+  /* Tree / canvas */
+  svg{width:2000px;height:1400px; /* large virtual canvas; scrollable */}
+  .edge{stroke:var(--edge);stroke-width:1.5;opacity:.8}
+  .node{fill:var(--node);stroke:var(--nodeBorder);stroke-width:1;border-radius:14px}
+  .node:hover{filter:brightness(1.07)}
+  .nwrap{cursor:pointer}
+  .nlabel{fill:var(--ink);font-size:13px}
+  .ntag{fill:var(--muted);font-size:11px}
+  .collapsed .nlabel{fill:#aac7ff}
+  .selected .node{stroke:var(--accent);filter:drop-shadow(0 0 16px rgba(105,226,255,0.15))}
+  .pill{font-size:11px;fill:#cfe7ff}
+
+  /* Info disclosure */
+  .dot.infodisclosure { background: #ffb3ba; }
+
+    /* Authentication Testing */
+  .dot.authtesting { background: #ff9a8b; }
+  .dot.oauth { background: #8ac6d1; }
+  .dot.jwt { background: #ffb3ba; }
+
+  /* Session Mgmt */
+  .dot.sessionmgmt { background: #a3c1ad; }
+
+  /* Access Control */
+  .dot.accesscontrol { background: #ffcc66; }
+
+  /* Business Logic Vulnerabilities */
+  .dot.businesslogic { background: #ffcc66; }
+
+  /* Path Traversal */
+  .dot.pathtraversal { background: #c2b2ff; }
+
+  /* SSTI */
+  .dot.ssti { background: #ff99cc; }
+
+  /* Command Injection */
+  .dot.commandinjection { background: #99cc00; }
+
+  /* XSS */
+  .dot.xss { background: #ffb84d; }
+
+  /* CSRF */
+  .dot.csrf { background: #ff8a65; }
+
+  /* Prototype Pollution */
+  .dot.prototype { background: #ff6b6b; }
+
+  /* CORS */
+  .dot.cors { background: #ff9a76; }
+
+  /* Clickjacking */
+  .dot.clickjacking { background: #ff6b6b; }
+
+  /* DOM-Based Vulnerabilities */
+  .dot.dom-based { background: #9c27b0; }
+
+  /* SSRF */
+  .dot.ssrf { background: #ff9d9d; }
+
+  /* Deserialization */
+  .dot.deserialization { background: #ffa94d; }
+
+  /* Race Condition */
+  .dot.race { background: #ff7b00; }
+
+  /* File Upload Vulns */
+  .dot.fileupload { background: #ff6b6b; }
+
+  /* API */
+  .dot.api { background: #9d79ff; }
+
+  /* GraphQL */
+  .dot.graphql { background: #ff6b9d; }
+
+  /* Websockets */
+  .dot.websocket { background: #ff7b9c; }
+
+  /* Web Cache Deception */
+  .dot.wcd { background: #ff8c42; }
+
+  /* Web Cache Poisoning */
+  .dot.wcp { background: #ff6f61; }
+
+  /* Host Headers Attacks */
+  .dot.hostheader { background: #ff8a65; }
+
+  /* HTTP Request Smuggling */
+  .dot.hrs { background: #ff5252; }
+
+  /* LLM Attacks */
+  .dot.llm { background: #ab47bc; }
+
+  /* Right panel */
+  .panel{display:flex;flex-direction:column;gap:10px}
+  .title{font-weight:700;font-size:16px}
+  .kvs div{margin:2px 0}
+  .section{margin-top:4px}
+  .code{background:#091118;border:1px solid #213246;border-radius:12px;padding:10px;overflow:auto;white-space:pre}
+  .list{display:flex;flex-direction:column;gap:6px}
+  .tag{display:inline-flex;gap:6px;align-items:center;background:#101926;border:1px solid #2a3a4d;border-radius:999px;padding:4px 8px;color:#cde2ff}
+  .copy{float:right}
+  .muted{color:var(--muted)}
+  .small{font-size:12px}
+  .hint{background:#0e1520;border:1px dashed #2a3a4d;border-radius:10px;padding:8px;color:#b6c7dd}
+  footer{grid-column:1/4;border-top:1px solid #1d2733;padding:8px 14px;color:#9db0c9;background:#0a0e13}
+
+  .tree-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .legend{display:flex;align-items:center;gap:6px}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}
+  .dot.sql{background:#78e3ff}
+  .dot.nosql{background:#9cf6b5}
+  .dot.ldap{background:#ffd36e}
+  .dot.xml{background:#ff9dbc}
+  .dot.misc{background:#cda8ff}
