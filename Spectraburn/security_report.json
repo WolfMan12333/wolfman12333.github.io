@@ -1,0 +1,3022 @@
+{
+  "metadata": {
+    "project_name": "PRJCT4",
+    "base_url": "http://localhost/vuln_test_app",
+    "scan_date": "2025-11-11T15:30:32.525954",
+    "total_files": 6,
+    "analyzed_files": 5,
+    "risk_score": 30
+  },
+  "vulnerabilities": [
+    {
+      "id": "VULN-0001",
+      "title": "Unvalidated Input Parameter: REQUEST_METHOD",
+      "description": "The parameter \"REQUEST_METHOD\" was found in source code without apparent validation.",
+      "severity": "High",
+      "cvss_score": 8.9,
+      "parameter": "REQUEST_METHOD",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: REQUEST_METHOD",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526078",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0001",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter REQUEST_METHOD",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20REQUEST_METHOD",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: REQUEST_METHOD\n# Parameter: REQUEST_METHOD\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"REQUEST_METHOD\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0002",
+      "title": "Unvalidated Input Parameter: SERVER_SOFTWARE",
+      "description": "The parameter \"SERVER_SOFTWARE\" was found in source code without apparent validation.",
+      "severity": "High",
+      "cvss_score": 8.9,
+      "parameter": "SERVER_SOFTWARE",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: SERVER_SOFTWARE",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526244",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0002",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter SERVER_SOFTWARE",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20SERVER_SOFTWARE",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: SERVER_SOFTWARE\n# Parameter: SERVER_SOFTWARE\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"SERVER_SOFTWARE\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0003",
+      "title": "Unvalidated Input Parameter: password",
+      "description": "The parameter \"password\" was found in source code without apparent validation.",
+      "severity": "Critical",
+      "cvss_score": 9.2,
+      "parameter": "password",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: password",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526259",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0003",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter password",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter password",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter password",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter password",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter password",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter password",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter password",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter password",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter password",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter password",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter password",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter password",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20password",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: password\n# Parameter: password\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"password\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0004",
+      "title": "Unvalidated Input Parameter: cmd",
+      "description": "The parameter \"cmd\" was found in source code without apparent validation.",
+      "severity": "High",
+      "cvss_score": 8.9,
+      "parameter": "cmd",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: cmd",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526269",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0004",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter cmd",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter cmd",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter cmd",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter cmd",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter cmd",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter cmd",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter cmd",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter cmd",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter cmd",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter cmd",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter cmd",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter cmd",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20cmd",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: cmd\n# Parameter: cmd\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"cmd\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0005",
+      "title": "Unvalidated Input Parameter: q",
+      "description": "The parameter \"q\" was found in source code without apparent validation.",
+      "severity": "High",
+      "cvss_score": 8.9,
+      "parameter": "q",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: q",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526278",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0005",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter q",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter q",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter q",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter q",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter q",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter q",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter q",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter q",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter q",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter q",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter q",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter q",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20q",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: q\n# Parameter: q\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"q\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0006",
+      "title": "Unvalidated Input Parameter: username",
+      "description": "The parameter \"username\" was found in source code without apparent validation.",
+      "severity": "High",
+      "cvss_score": 8.9,
+      "parameter": "username",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: username",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526286",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0006",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter username",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter username",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter username",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter username",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter username",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter username",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter username",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter username",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter username",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter username",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter username",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter username",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20username",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: username\n# Parameter: username\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"username\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0007",
+      "title": "Unvalidated Input Parameter: user_id",
+      "description": "The parameter \"user_id\" was found in source code without apparent validation.",
+      "severity": "High",
+      "cvss_score": 8.9,
+      "parameter": "user_id",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: user_id",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526295",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0007",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter user_id",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter user_id",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter user_id",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter user_id",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter user_id",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter user_id",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter user_id",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter user_id",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter user_id",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter user_id",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter user_id",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter user_id",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20user_id",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: user_id\n# Parameter: user_id\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"user_id\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0008",
+      "title": "Unvalidated Input Parameter: avatar",
+      "description": "The parameter \"avatar\" was found in source code without apparent validation.",
+      "severity": "High",
+      "cvss_score": 8.9,
+      "parameter": "avatar",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: avatar",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526302",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0008",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter avatar",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter avatar",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter avatar",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter avatar",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter avatar",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter avatar",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter avatar",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter avatar",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter avatar",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter avatar",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter avatar",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter avatar",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20avatar",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: avatar\n# Parameter: avatar\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"avatar\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0009",
+      "title": "Unvalidated Input Parameter: debug",
+      "description": "The parameter \"debug\" was found in source code without apparent validation.",
+      "severity": "High",
+      "cvss_score": 8.9,
+      "parameter": "debug",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: debug",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526310",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0009",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter debug",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter debug",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter debug",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter debug",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter debug",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter debug",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter debug",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter debug",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter debug",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter debug",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter debug",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter debug",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20debug",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: debug\n# Parameter: debug\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"debug\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0010",
+      "title": "Unvalidated Input Parameter: action",
+      "description": "The parameter \"action\" was found in source code without apparent validation.",
+      "severity": "High",
+      "cvss_score": 8.9,
+      "parameter": "action",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Implement proper input validation and sanitization for parameter: action",
+      "exploit_poc": "",
+      "category": "Input Validation",
+      "timestamp": "2025-11-11T15:30:32.526317",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Avoid Dangerous Functions",
+          "description": "Replace dangerous functions like eval(), exec(), system() with safer alternatives.",
+          "code_examples": [
+            "# Python - avoid eval()\n# Dangerous:\nresult = eval(user_input)\n# Safe:\nresult = ast.literal_eval(user_input)  # Only for literals\n# Or use specific parsing libraries",
+            "// PHP - avoid exec()\n// Dangerous:\nexec($user_input);\n// Safe:\n$output = shell_exec('ls /safe/directory');  # Fixed command",
+            "// JavaScript - avoid eval()\n// Dangerous:\neval(userInput);\n// Safe:\nlet result = Function('\"use strict\";return (' + userInput + ')')();"
+          ],
+          "references": [
+            "OWASP Command Injection",
+            "CWE-78: OS Command Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Medium",
+          "security_impact": "Prevents RCE vulnerabilities"
+        },
+        {
+          "title": "Input Validation for Commands",
+          "description": "Validate and sanitize input used in command execution.",
+          "code_examples": [
+            "# Python command validation\nimport subprocess\nimport shlex\n\ndef safe_command_execution(command, user_input):\n    # Validate user input\n    if not re.match(r'^[a-zA-Z0-9._-]+$', user_input):\n        raise ValueError('Invalid input')\n    \n    # Use shlex for proper escaping\n    safe_input = shlex.quote(user_input)\n    full_command = f'{command} {safe_input}'\n    \n    result = subprocess.run(full_command, shell=True, capture_output=True, text=True)\n    return result.stdout",
+            "// PHP command validation\nfunction safeShellExec($baseCommand, $userInput) {\n    if (!preg_match('/^[a-zA-Z0-9._-]+$/', $userInput)) {\n        throw new Exception('Invalid input');\n    }\n    \n    $safeInput = escapeshellarg($userInput);\n    $fullCommand = $baseCommand . ' ' . $safeInput;\n    \n    return shell_exec($fullCommand);\n}"
+          ],
+          "references": [
+            "OWASP Command Injection Prevention",
+            "Secure Coding Practices"
+          ],
+          "priority": "High",
+          "effort": "High",
+          "security_impact": "Reduces RCE risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0010",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Input Validation Unvalidated Input Parameter action",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Input Validation exploit",
+            "url": "https://www.exploit-db.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unvalidated Input Parameter action",
+            "url": "https://www.exploit-db.com/search?q=Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation Unvalidated Input Parameter action",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Input Validation exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unvalidated Input Parameter action",
+            "url": "https://packetstormsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation Unvalidated Input Parameter action",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Input Validation exploit",
+            "url": "https://cxsecurity.com/search/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unvalidated Input Parameter action",
+            "url": "https://cxsecurity.com/search/?q=Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation Unvalidated Input Parameter action",
+            "url": "https://vulners.com/search?query=Input%20Validation%20Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation proof of concept",
+            "url": "https://vulners.com/search?query=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Input Validation exploit",
+            "url": "https://vulners.com/search?query=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unvalidated Input Parameter action",
+            "url": "https://vulners.com/search?query=Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation Unvalidated Input Parameter action",
+            "url": "https://github.com/search?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation proof of concept",
+            "url": "https://github.com/search?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Input Validation exploit",
+            "url": "https://github.com/search?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unvalidated Input Parameter action",
+            "url": "https://github.com/search?q=Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation Unvalidated Input Parameter action",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Input Validation exploit",
+            "url": "https://www.rapid7.com/db/?q=Input%20Validation%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unvalidated Input Parameter action",
+            "url": "https://www.rapid7.com/db/?q=Unvalidated%20Input%20Parameter%20action",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unvalidated Input Parameter: action\n# Parameter: action\n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"action\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0011",
+      "title": "Unsafe Code Pattern Detected",
+      "description": "Potentially dangerous code pattern: exec_functions: exec\\s*\\(\\s*(\\$?\\w+) (variable: $sql)",
+      "severity": "High",
+      "cvss_score": 7.0,
+      "parameter": "",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Review and secure the identified code pattern.",
+      "exploit_poc": "",
+      "category": "Code Security",
+      "timestamp": "2025-11-11T15:30:32.526327",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Parameterized Queries",
+          "description": "Use prepared statements with parameterized queries to separate SQL code from data.",
+          "code_examples": [
+            "# Python SQLite3\nimport sqlite3\nconn = sqlite3.connect('database.db')\ncursor = conn.cursor()\ncursor.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, password))",
+            "// PHP PDO\n$pdo = new PDO($dsn, $user, $pass);\n$stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');\n$stmt->execute(['email' => $email]);",
+            "// Java JDBC\nString sql = 'SELECT * FROM products WHERE category = ?';\nPreparedStatement stmt = connection.prepareStatement(sql);\nstmt.setString(1, category);\nResultSet rs = stmt.executeQuery();"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention",
+            "CWE-89: SQL Injection"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Completely prevents SQL injection"
+        },
+        {
+          "title": "Input Validation for SQL",
+          "description": "Validate user input against whitelist of allowed characters for SQL queries.",
+          "code_examples": [
+            "# Python input validation\nimport re\ndef is_valid_sql_input(input_str):\n    return bool(re.match(r'^[a-zA-Z0-9_@.-]+$', input_str))",
+            "// PHP input validation\nfunction isValidForSQL($input) {\n    return preg_match('/^[a-zA-Z0-9_@.-]+$/', $input);\n}",
+            "// Java input validation\npublic boolean isValidSQLInput(String input) {\n    return input.matches(\"^[a-zA-Z0-9_@.-]+$\");\n}"
+          ],
+          "references": [
+            "OWASP Input Validation",
+            "SQL Injection Prevention"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Reduces SQL injection risk"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:N",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0011",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://www.exploit-db.com/search?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://www.exploit-db.com/search?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Code Security proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Code Security exploit",
+            "url": "https://www.exploit-db.com/search?q=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://packetstormsecurity.com/search/?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://packetstormsecurity.com/search/?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Code Security proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Code Security exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://cxsecurity.com/search/?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://cxsecurity.com/search/?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Code Security proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Code Security exploit",
+            "url": "https://cxsecurity.com/search/?q=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://vulners.com/search?query=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://vulners.com/search?query=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Code Security proof of concept",
+            "url": "https://vulners.com/search?query=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Code Security exploit",
+            "url": "https://vulners.com/search?query=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://github.com/search?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://github.com/search?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Code Security proof of concept",
+            "url": "https://github.com/search?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Code Security exploit",
+            "url": "https://github.com/search?q=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://www.rapid7.com/db/?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://www.rapid7.com/db/?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Code Security proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Code Security exploit",
+            "url": "https://www.rapid7.com/db/?q=Code%20Security%20exploit",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unsafe Code Pattern Detected\n# Parameter: \n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    },
+    {
+      "id": "VULN-0012",
+      "title": "Unsafe Code Pattern Detected",
+      "description": "Potentially dangerous code pattern: exec_functions: system\\s*\\(\\s*(\\$?\\w+) (variable: $_GET)",
+      "severity": "Medium",
+      "cvss_score": 4.3,
+      "parameter": "",
+      "payload": "",
+      "url": "",
+      "evidence": "",
+      "remediation": "Review and secure the identified code pattern.",
+      "exploit_poc": "",
+      "category": "Code Security",
+      "timestamp": "2025-11-11T15:30:32.526338",
+      "remediation_suggestions": [
+        {
+          "title": "Input Validation and Sanitization",
+          "description": "Always validate and sanitize all user inputs before processing.",
+          "code_examples": [
+            "# Python example\nimport re\nsafe_input = re.sub(r'[^a-zA-Z0-9]', '', user_input)",
+            "// PHP example\n$safe_input = filter_var($input, FILTER_SANITIZE_STRING);",
+            "// Java example\nString safeInput = input.replaceAll('[^a-zA-Z0-9]', '');"
+          ],
+          "references": [
+            "OWASP Input Validation Cheat Sheet",
+            "CWE-20: Improper Input Validation"
+          ],
+          "priority": "High",
+          "effort": "Medium",
+          "security_impact": "Prevents multiple vulnerability types"
+        },
+        {
+          "title": "Use Prepared Statements",
+          "description": "Prevent SQL injection by using parameterized queries.",
+          "code_examples": [
+            "# Python with SQLite3\ncursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+            "// PHP with PDO\n$stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');\n$stmt->execute(['id' => $user_id]);",
+            "// Java with JDBC\nPreparedStatement stmt = conn.prepareStatement('SELECT * FROM users WHERE id = ?');\nstmt.setInt(1, userId);"
+          ],
+          "references": [
+            "OWASP SQL Injection Prevention Cheat Sheet",
+            "CWE-89: Improper Neutralization of Special Elements"
+          ],
+          "priority": "Critical",
+          "effort": "Low",
+          "security_impact": "Eliminates SQL injection vulnerabilities"
+        },
+        {
+          "title": "Security Headers Implementation",
+          "description": "Implement security headers to enhance application security.",
+          "code_examples": [
+            "# Django security middleware\n# In settings.py\nSECURE_BROWSER_XSS_FILTER = True\nSECURE_CONTENT_TYPE_NOSNIFF = True\nX_FRAME_OPTIONS = 'DENY'\nSECURE_HSTS_SECONDS = 31536000\nSECURE_HSTS_INCLUDE_SUBDOMAINS = True\nSECURE_HSTS_PRELOAD = True",
+            "// Express.js security headers\nconst helmet = require('helmet');\napp.use(helmet());\n\n// Custom CSP\napp.use(helmet.contentSecurityPolicy({\n    directives: {\n        defaultSrc: [\"'self'\"],\n        styleSrc: [\"'self'\", \"'unsafe-inline'\"],\n        scriptSrc: [\"'self'\"],\n    }\n}));",
+            "# Apache security headers\nHeader always set X-Content-Type-Options nosniff\nHeader always set X-Frame-Options DENY\nHeader always set X-XSS-Protection \"1; mode=block\"\nHeader always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\""
+          ],
+          "references": [
+            "OWASP Secure Headers Project",
+            "Security Headers Best Practices"
+          ],
+          "priority": "Medium",
+          "effort": "Low",
+          "security_impact": "Enhances overall security posture"
+        }
+      ],
+      "cvss_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:N/I:L/A:N",
+      "exploit_info": {
+        "vulnerability_id": "VULN-0012",
+        "searches_performed": [
+          {
+            "source": "exploit_db",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://www.exploit-db.com/search?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://www.exploit-db.com/search?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Code Security proof of concept",
+            "url": "https://www.exploit-db.com/search?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "exploit_db",
+            "term": "Code Security exploit",
+            "url": "https://www.exploit-db.com/search?q=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://packetstormsecurity.com/search/?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://packetstormsecurity.com/search/?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Code Security proof of concept",
+            "url": "https://packetstormsecurity.com/search/?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "packetstorm",
+            "term": "Code Security exploit",
+            "url": "https://packetstormsecurity.com/search/?q=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://cxsecurity.com/search/?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://cxsecurity.com/search/?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Code Security proof of concept",
+            "url": "https://cxsecurity.com/search/?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "cxsecurity",
+            "term": "Code Security exploit",
+            "url": "https://cxsecurity.com/search/?q=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://vulners.com/search?query=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://vulners.com/search?query=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Code Security proof of concept",
+            "url": "https://vulners.com/search?query=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "vulners",
+            "term": "Code Security exploit",
+            "url": "https://vulners.com/search?query=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://github.com/search?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://github.com/search?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Code Security proof of concept",
+            "url": "https://github.com/search?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "github",
+            "term": "Code Security exploit",
+            "url": "https://github.com/search?q=Code%20Security%20exploit",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Code Security Unsafe Code Pattern Detected",
+            "url": "https://www.rapid7.com/db/?q=Code%20Security%20Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Unsafe Code Pattern Detected",
+            "url": "https://www.rapid7.com/db/?q=Unsafe%20Code%20Pattern%20Detected",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Code Security proof of concept",
+            "url": "https://www.rapid7.com/db/?q=Code%20Security%20proof%20of%20concept",
+            "results_count": 0
+          },
+          {
+            "source": "rapid7",
+            "term": "Code Security exploit",
+            "url": "https://www.rapid7.com/db/?q=Code%20Security%20exploit",
+            "results_count": 0
+          }
+        ],
+        "exploit_links": [],
+        "poc_links": [],
+        "cve_references": [],
+        "confidence_score": 48
+      },
+      "poc_template": "# Proof of Concept\n# Vulnerability: Unsafe Code Pattern Detected\n# Parameter: \n\nimport requests\n\nurl = \"\"\n\n# Test payloads\npayloads = [\n    \"test_payload\",\n    \"{param}_test\",\n    \"malicious_input\"\n]\n\nfor payload in payloads:\n    params = {\"\": payload}\n    response = requests.get(url, params=params)\n    \n    # Analyze response\n    print(f\"Testing payload: {payload}\")\n    print(f\"Status: {response.status_code}\")\n    print(f\"Response length: {len(response.text)}\")\n    print(\"---\")\n"
+    }
+  ],
+  "summary": {
+    "total_vulnerabilities": 12,
+    "severity_breakdown": {
+      "Critical": 1,
+      "High": 10,
+      "Medium": 1,
+      "Low": 0,
+      "Info": 0
+    },
+    "risk_level": "Critical",
+    "scan_duration": "N/A",
+    "confidence_score": 95
+  },
+  "config": {
+    "template": "technical",
+    "filters": {
+      "critical": true,
+      "high": true,
+      "medium": true,
+      "low": true,
+      "info": true
+    },
+    "metadata": {
+      "title": "Report Title",
+      "client_name": "Customer Test Company",
+      "assessor_name": "Dawid Wordliczek"
+    }
+  }
+}
