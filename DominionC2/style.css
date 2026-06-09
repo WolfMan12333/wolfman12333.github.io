@@ -4,6 +4,7 @@ body {
   background: linear-gradient(to bottom, #0a0a0a, #1b0f1f);
   color: #eee;
   overflow-x: hidden;
+  display: flex; flex-direction: column; min-height: 100vh;
 }
 
 #bg-video {
@@ -35,6 +36,7 @@ header {
   animation: fadeIn 1.5s ease-out;
   position: relative;
   z-index: 1;
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
 }
 
 header img {
@@ -106,7 +108,7 @@ p {
 }
 
 .cta a {
-  background-color: #ff305f;
+  /*background-color: #ff305f;
   color: #fff;
   padding: 0.75rem 2rem;
   margin: 1rem;
@@ -114,7 +116,8 @@ p {
   text-decoration: none;
   font-weight: bold;
   transition: transform 0.3s ease;
-  display: inline-block;
+  display: inline-block;*/
+  display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;
 }
 
 .cta a:hover {
@@ -130,6 +133,7 @@ footer {
   background: rgba(0, 0, 0, 0.6);
   position: relative;
   z-index: 1;
+  margin-top: auto;
 }
 
 @keyframes fadeIn {
