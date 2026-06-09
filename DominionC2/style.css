@@ -1,237 +1,55 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to bottom, #0a0a0a, #1b0f1f);
-  color: #eee;
-  overflow-x: hidden;
-}
-
-#bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  pointer-events: none;
-  filter: brightness(1.2) contrast(1.15) saturate(1.4);
-}
-
-.overlay {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.85);
-  z-index: 0;
-}
-
-header {
-  text-align: center;
-  padding: 4rem 1rem 2rem 1rem;
-  animation: fadeIn 1.5s ease-out;
-  position: relative;
-  z-index: 1;
-}
-
-header img {
-  height: 120px;
-  margin-bottom: 1rem;
-}
-
-h1 {
-  font-size: 2.2rem;
-  color: #ff305f;
-  animation: slideDown 1s ease-out;
-}
-
-p {
-  font-size: 1.1rem;
-  color: #ccc;
-  animation: fadeIn 2s ease-in;
-}
-
-.status-banner {
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  color: #ff758a;
-  background: rgba(255, 48, 95, 0.1);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-}
-
-.section {
-  max-width: 900px;
-  margin: 3rem auto;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  backdrop-filter: blur(5px);
-  animation: fadeIn 2s ease-in;
-  z-index: 1;
-  position: relative;
-}
-
-.section h2 {
-  color: #ff305f;
-  margin-bottom: 1rem;
-}
-
-.section ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.section li {
-  margin: 0.7rem 0;
-  padding-left: 1.5rem;
-  position: relative;
-  color: #eee;
-}
-
-.section li::before {
-  content: '\2022';
-  position: absolute;
-  left: 0;
-  color: #ff305f;
-  font-size: 1.2rem;
-}
-
-.cta {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.cta a {
-  background-color: #ff305f;
-  color: #fff;
-  padding: 0.75rem 2rem;
-  margin: 1rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: transform 0.3s ease;
-  display: inline-block;
-}
-
-.cta a:hover {
-  transform: scale(1.05);
-  background-color: #ff4d78;
-}
-
-footer {
-  text-align: center;
-  padding: 2rem;
-  font-size: 0.9rem;
-  color: #888;
-  background: rgba(0, 0, 0, 0.6);
-  position: relative;
-  z-index: 1;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideDown {
-  from { transform: translateY(-40px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.glow {
-  box-shadow: 0 0 12px #ff0044;
-  transform: scale(1.05);
-  transition: 0.3s ease;
-}
-
-.docs-content {
-  max-width: 960px;
-  margin: 120px auto 40px auto;
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 0 30px rgba(255, 0, 80, 0.2);
-  color: #eaeaea;
-}
-
-.docs-content h2 {
-  color: #ff4466;
-  border-bottom: 1px solid #333;
-  padding-bottom: 8px;
-  margin-top: 32px;
-}
-
-.docs-content pre {
-  background-color: #111;
-  color: #00ff99;
-  padding: 16px;
-  overflow-x: auto;
-  border-radius: 10px;
-}
-
-.overlay {
-  background: transparent;
-  z-index: 0;
-}
-
+/* Poprawki układu – stopka na dole, opis niżej, przyciski wyśrodkowane */
 html, body {
     height: 100%;
     margin: 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-.back-button-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-  position: relative;
-  z-index: 10; /* musi być wyższy niż overlay */
+body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-.back-button {
-  display: inline-block;
-  background-color: #ff305f;
-  color: white;
-  padding: 0.6rem 1.5rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
-  z-index: 11;
-}
-
-.back-button:hover {
-  background-color: #ff4d78;
-}
-
-
-.logo {
-  height: 120px;
-  margin-bottom: 1rem;
+header {
+    flex: 1 0 auto; /* nie skraca się, zajmuje tyle miejsca ile trzeba */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* wycentruje zawartość w pionie (opcjonalne) */
 }
 
 .mainfooter {
-  text-align: center;
-  padding: 2rem;
-  font-size: 0.9rem;
-  color: #888;
-  background: rgba(0, 0, 0, 0.6);
-  position: relative;
-  z-index: 1;
+    flex-shrink: 0; /* stopka nie będzie się kurczyć */
+    margin-top: auto; /* przykleja stopkę do dołu */
 }
 
-pre {
-  background-color: #111;
-  color: #00ff99;
-  padding: 16px;
-  border-radius: 10px;
-  overflow-x: auto;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 1rem;
-  white-space: pre-wrap;
-}    
+/* odstęp między tytułem a opisem */
+h1 {
+    margin-bottom: 1.5rem;
+}
+
+/* przyciski – responsywne wyśrodkowanie */
+.cta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cta a {
+    margin: 0; /* usuwamy stare marginesy */
+    display: inline-block;
+}
+
+/* dla małych ekranów */
+@media (max-width: 600px) {
+    .cta {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cta a {
+        width: 80%;
+    }
+}
