@@ -4,6 +4,8 @@ body {
   background: linear-gradient(to bottom, #0a0a0a, #1b0f1f);
   color: #eee;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 #bg-video {
@@ -35,6 +37,7 @@ header {
   animation: fadeIn 1.5s ease-out;
   position: relative;
   z-index: 1;
+  flex: 1 0 auto;
 }
 
 header img {
