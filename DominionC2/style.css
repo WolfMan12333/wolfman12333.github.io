@@ -58,6 +58,10 @@ p {
   animation: fadeIn 2s ease-in;
 }
 
+.tagline {
+    margin-bottom: 3rem;
+}
+
 .status-banner {
   margin-top: 1rem;
   font-size: 0.95rem;
