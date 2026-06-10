@@ -58,7 +58,7 @@ p {
   animation: fadeIn 2s ease-in;
 }
 
-.tagline {
+.home .tagline {
     margin-bottom: 15rem;
 }
 
